@@ -34,8 +34,9 @@ end
 
 function handle(oidcConfig)
     local response
-
+    kong.log("handle")
     if oidcConfig.bearer_jwt_auth_enable then
+        kong.log(" handle  verify_bearer_jwt")
         response = verify_bearer_jwt(oidcConfig)
         if response then
             utils.setCredentials(response)
@@ -49,6 +50,7 @@ function handle(oidcConfig)
     end
 
     if oidcConfig.introspection_endpoint then
+        kong.log(" handle  introspection_endpoint")
         response = introspect(oidcConfig)
         if response then
             utils.setCredentials(response)
