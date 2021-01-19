@@ -116,9 +116,12 @@ function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
         --if oidcConfig.bearer_jwks == "yes" then
             ngx.log(ngx.DEBUG, "ANTES JWS")
+            print("ANTES JWS")
             local res, err = require("resty.openidc").bearer_jwt_verify(oidcConfig)
             ngx.log(ngx.DEBUG, "DEPOIS JWS")
+            print("DEPOIS JWS")
             if err then
+                print("Erro JWS")
                 ngx.log(ngx.DEBUG, "Erro JWS",err)
                 return nil
             end
