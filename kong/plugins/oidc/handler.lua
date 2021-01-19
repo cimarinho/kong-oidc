@@ -116,13 +116,13 @@ function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
         --if oidcConfig.bearer_jwks == "yes" then
 
-            kong.log.err('ANTES JWT verify failed: ')
+            kong.log('ANTES JWT verify failed: ')
             local res, err = require("resty.openidc").bearer_jwt_verify(oidcConfig)
-            kong.log.err('DEPOIS JWT verify failed: ')
-            print("DEPOIS JWS")
+            kong.log('DEPOIS JWT verify failed: ')
+
             if err then
                 kong.log.err('Bearer JWT verify failed: ' .. err)
-                ngx.log(ngx.DEBUG, "Erro JWS",err)
+
                 return nil
             end
             ngx.log(ngx.DEBUG, "OidcHandler introspect succeeded, requested path: " .. ngx.var.request_uri)
