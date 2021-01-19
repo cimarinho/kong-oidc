@@ -114,25 +114,28 @@ end
 
 function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
-        if oidcConfig.bearer_jwks == "yes" then
+        --if oidcConfig.bearer_jwks == "yes" then
+            ngx.log(ngx.DEBUG, "ANTES JWS")
             local res, err = require("resty.openidc").bearer_jwt_verify(oidcConfig)
+            ngx.log(ngx.DEBUG, "DEPOIS JWS")
             if err then
+                ngx.log(ngx.DEBUG, "Erro JWS",err)
                 return nil
             end
             ngx.log(ngx.DEBUG, "OidcHandler introspect succeeded, requested path: " .. ngx.var.request_uri)
             return res
-        else
-            local res, err = require("resty.openidc").introspect(oidcConfig)
-            if err then
-                if oidcConfig.bearer_only == "yes" then
-                    ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
-                    utils.exit(ngx.HTTP_UNAUTHORIZED, err, ngx.HTTP_UNAUTHORIZED)
-                end
-                return nil
-            end
-            ngx.log(ngx.DEBUG, "OidcHandler introspect succeeded, requested path: " .. ngx.var.request_uri)
-            return res
-        end
+        --else
+        --    local res, err = require("resty.openidc").introspect(oidcConfig)
+        --    if err then
+        --        if oidcConfig.bearer_only == "yes" then
+        --            ngx.header["WWW-Authenticate"] = 'Bearer realm="' .. oidcConfig.realm .. '",error="' .. err .. '"'
+        --            utils.exit(ngx.HTTP_UNAUTHORIZED, err, ngx.HTTP_UNAUTHORIZED)
+        --        end
+        --        return nil
+        --    end
+        --    ngx.log(ngx.DEBUG, "OidcHandler introspect succeeded, requested path: " .. ngx.var.request_uri)
+        --    return res
+        --end
     end
     return nil
 end
