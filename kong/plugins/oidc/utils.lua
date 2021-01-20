@@ -139,13 +139,6 @@ function M.injectHeaderByToken(accessToken, header_names)
     local header = ngx.req.get_headers()['Authorization']
 
 
-    --local jwt_obj = jwt:load_jwt(header)
-    --local cjson = require "cjson"
-    --local tt = cjson.encode(jwt_obj)
-    --
-    --kong.log.info(tt)
-
-
     for i, value in ipairs(header_names) do
         kong.log.info(value)
     end
