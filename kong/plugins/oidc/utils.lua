@@ -136,14 +136,6 @@ end
 
 function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
-    kong.log.info(accessToken)
-    for i, value in ipairs(header_names) do
-        kong.log.info(value)
-    end
-end
-
-function M.injectAccessToken(accessToken, headerName, bearerToken)
-
     local header = ngx.req.get_headers()['Authorization']
     if header and header:find(" ") then
         local divider = header:find(' ')
@@ -151,7 +143,12 @@ function M.injectAccessToken(accessToken, headerName, bearerToken)
         kong.log.info(string.lower(header:sub(1, divider - 1)) )
 
     end
+    for i, value in ipairs(header_names) do
+        kong.log.info(value)
+    end
+end
 
+function M.injectAccessToken(accessToken, headerName, bearerToken)
     ngx.log(ngx.DEBUG, "Injecting " .. headerName)
     local token = accessToken
     if (bearerToken) then
