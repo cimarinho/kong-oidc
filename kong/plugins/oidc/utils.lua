@@ -137,17 +137,15 @@ end
 function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
     local header = ngx.req.get_headers()['Authorization']
-
-    local divider = header:find(' ')
-    kong.log.info(divider)
-    local yy = header:sub(divider + 1)
-    kong.log.info(yy)
-    local d = string.match(yy, "[^,]+")
-    kong.log.info("d  ==")
-    kong.log.info(d)
-    local token = d:sub(1, -2)
-    kong.log.info("token  ==")
-    kong.log.info(token)
+    local token_jwt
+    local itera = 0
+    for  token in string.gmatch(header, "[^%s]+") do
+        if (itera > 0) then
+            token_jwt = token:sub(1, -2)
+            break
+        end
+        itera = itera + 1
+    end
 
     for i, value in ipairs(header_names) do
         kong.log.info(value)
