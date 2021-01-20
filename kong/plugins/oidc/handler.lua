@@ -34,11 +34,11 @@ end
 
 function handle(oidcConfig)
     local response
-    kong.log.err("handle")
+    kong.log.info("handle")
 
-    kong.log.err('ANTES JWT verify failed: ')
+    kong.log.info('ANTES JWT verify  ')
     local res = verify_bearer_jwt(oidcConfig)
-    kong.log.err('res RESPOSTA: '..res)
+    kong.log.info('res RESPOSTA: '..res)
 
 
     if oidcConfig.bearer_jwt_auth_enable then
