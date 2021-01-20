@@ -187,6 +187,7 @@ function M.injectHeaders(header_names, header_claims, sources)
             end
         end
     end
+    kong.log.info("header")
     kong.service.request.set_header("teste", "teste123")
 end
 
