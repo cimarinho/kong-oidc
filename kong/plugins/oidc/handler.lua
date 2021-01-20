@@ -166,11 +166,11 @@ function verify_bearer_jwt(oidcConfig)
     -- setup controlled configuration for bearer_jwt_verify
     local opts = {
         accept_none_alg = false,
-        accept_unsupported_alg = false,
-        token_signing_alg_values_expected = oidcConfig.bearer_jwt_auth_signing_algs,
-        discovery = oidcConfig.discovery,
-        timeout = oidcConfig.timeout,
-        ssl_verify = oidcConfig.ssl_verify
+        accept_unsupported_alg = false
+        --token_signing_alg_values_expected = oidcConfig.bearer_jwt_auth_signing_algs,
+        --discovery = oidcConfig.discovery,
+        --timeout = oidcConfig.timeout,
+        --ssl_verify = oidcConfig.ssl_verify
     }
 
     kong.log.info("opts ----------------")
