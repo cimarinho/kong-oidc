@@ -135,9 +135,9 @@ local function set_consumer(consumer, credential)
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
-    kong.log.info(injectHeaderByToken)
+    kong.log.info("injectHeaderByToken")
     kong.log.info(accessToken)
-    for i, value in ipairs(oidcConfig.headers_jwks) do
+    for i, value in ipairs(header_names) do
         kong.log.info(value)
     end
 end

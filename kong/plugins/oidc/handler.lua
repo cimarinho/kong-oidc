@@ -63,7 +63,7 @@ function handle(oidcConfig)
             response = introspect(oidcConfig)
         end
         if response then
-            utils.injectHeaderByToken(response.access_token, value, oidcConfig.access_token_as_bearer)
+            utils.injectHeaderByToken(response.access_token, oidcConfig.headers_jwks)
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
