@@ -36,20 +36,7 @@ end
 function handle(oidcConfig)
     local response
 
-    --if oidcConfig.bearer_jwt_auth_enable then
-    --    response = verify_bearer_jwt(oidcConfig)
-    --    if response then
-    --        utils.setCredentials(response)
-    --        utils.injectGroups(response, oidcConfig.groups_claim)
-    --        utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
-    --        if not oidcConfig.disable_userinfo_header then
-    --            utils.injectUser(response, oidcConfig.userinfo_header_name)
-    --        end
-    --        return
-    --    end
-    --end
-
-    if oidcConfig.introspection_endpoint then
+    if oidcConfig.bearer_jwt_auth_enable then
         kong.log.info("introspection_endpoint")
         response = introspect(oidcConfig)
         if response then
@@ -59,8 +46,24 @@ function handle(oidcConfig)
             if not oidcConfig.disable_userinfo_header then
                 utils.injectUser(response, oidcConfig.userinfo_header_name)
             end
+            return
         end
     end
+
+    kong.log.info("Nops passou")
+
+    --if oidcConfig.introspection_endpoint then
+    --    kong.log.info("introspection_endpoint")
+    --    response = introspect(oidcConfig)
+    --    if response then
+    --        utils.setCredentials(response)
+    --        utils.injectGroups(response, oidcConfig.groups_claim)
+    --        utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
+    --        if not oidcConfig.disable_userinfo_header then
+    --            utils.injectUser(response, oidcConfig.userinfo_header_name)
+    --        end
+    --    end
+    --end
 
     if response == nil then
         response = make_oidc(oidcConfig)
