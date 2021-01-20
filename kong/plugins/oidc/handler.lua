@@ -119,6 +119,12 @@ end
 
 function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
+
+        kong.log.info(introspect)
+        response = verify_bearer_jwt(oidcConfig)
+        kong.log.info("response")
+        kong.log.info(response)
+        
         local res, err = require("resty.openidc").introspect(oidcConfig)
         if err then
             if oidcConfig.bearer_only == "yes" then
