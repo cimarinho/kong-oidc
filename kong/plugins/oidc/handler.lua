@@ -155,7 +155,7 @@ end
 
 function verify_bearer_jwt(oidcConfig)
 
-    kong.log.info("verify_bearer_jwt ----------------")
+    kong.log.info("oidcConfig ----------------" ..oidcConfig)
 
     if not utils.has_bearer_access_token() then
         return nil
