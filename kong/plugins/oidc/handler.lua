@@ -35,6 +35,12 @@ end
 function handle(oidcConfig)
     local response
     kong.log.err("handle")
+
+    kong.log.err('ANTES JWT verify failed: ')
+    local res, err = require("resty.openidc").bearer_jwt_verify(oidcConfig)
+    kong.log.err('res RESPOSTA: '..res)
+    kong.log.err('err ERROR: '..err)
+
     if oidcConfig.bearer_jwt_auth_enable then
         kong.log.err(" handle  verify_bearer_jwt")
         response = verify_bearer_jwt(oidcConfig)
@@ -49,10 +55,7 @@ function handle(oidcConfig)
         end
     end
 
-    kong.log.err('ANTES JWT verify failed: ')
-    local res, err = require("resty.openidc").bearer_jwt_verify(oidcConfig)
-    kong.log.err('res RESPOSTA: '..res)
-    kong.log.err('err ERROR: '..err)
+
 
     if oidcConfig.introspection_endpoint then
         kong.log.err(" handle  introspection_endpoint")
