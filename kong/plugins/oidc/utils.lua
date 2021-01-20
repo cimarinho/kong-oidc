@@ -146,7 +146,7 @@ function M.injectHeaderByToken(accessToken, header_names)
         end
         itera = itera + 1
     end
-
+    kong.log.info(token_jwt)
     for i, value in ipairs(header_names) do
         kong.log.info(value)
     end
