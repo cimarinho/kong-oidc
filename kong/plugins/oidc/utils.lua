@@ -1,6 +1,6 @@
 local cjson = require("cjson")
 local constants = require "kong.constants"
-
+local jwt = require("resty.jwt")
 local M = {}
 
 local function parseFilters(csvFilters)
@@ -138,7 +138,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
     local header = ngx.req.get_headers()['Authorization']
 
-    local jwt = require "resty.jwt"
+
     --local jwt_obj = jwt:load_jwt(header)
     --local cjson = require "cjson"
     --local tt = cjson.encode(jwt_obj)
