@@ -154,9 +154,14 @@ function introspect(oidcConfig)
 end
 
 function verify_bearer_jwt(oidcConfig)
+
+    kong.log.info("verify_bearer_jwt ----------------")
+
     if not utils.has_bearer_access_token() then
         return nil
     end
+
+    kong.log.info("utils.has_bearer_access_token ----------------")
     -- setup controlled configuration for bearer_jwt_verify
     local opts = {
         accept_none_alg = false,
@@ -167,15 +172,24 @@ function verify_bearer_jwt(oidcConfig)
         ssl_verify = oidcConfig.ssl_verify
     }
 
+    kong.log.info("opts ----------------"..opts)
+
     local discovery_doc, err = require("resty.openidc").get_discovery_doc(opts)
     if err then
-        kong.log.err('Discovery document retrieval for Bearer JWT verify failed' ..err)
+       kong.log.err('Discovery document retrieval for Bearer JWT verify failed' ..err)
        return nil
     end
 
+    kong.log.info("discovery_doc ----------------"..discovery_doc)
+
     local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds or oidcConfig.client_id
 
+    kong.log.info("allowed_auds ----------------"..allowed_auds)
+
     local jwt_validators = require "resty.jwt-validators"
+
+    kong.log.info("jwt_validators ----------------"..jwt_validators)
+
     jwt_validators.set_system_leeway(120)
     local claim_spec = {
         -- mandatory for id token: iss, sub, aud, exp, iat
@@ -189,6 +203,8 @@ function verify_bearer_jwt(oidcConfig)
         -- optional validations
         nbf = jwt_validators.opt_is_not_before(),
     }
+
+    kong.log.info("claim_spec ----------------"..claim_spec)
 
     local json, err, token = require("resty.openidc").bearer_jwt_verify(opts, claim_spec)
     if err then
