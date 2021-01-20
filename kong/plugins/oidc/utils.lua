@@ -137,10 +137,12 @@ end
 function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
     local header = ngx.req.get_headers()['Authorization']
+
+    kong.log.info(header)
     if header and header:find(" ") then
         local divider = header:find(' ')
         kong.log.info(string.lower(header:sub(0, divider - 1)) )
-        kong.log.info(string.lower(header:sub(1, divider - 1)) )
+        kong.log.info(header:sub(1, divider - 1) )
 
     end
     for i, value in ipairs(header_names) do
