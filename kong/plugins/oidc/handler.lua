@@ -65,6 +65,7 @@ function handle(oidcConfig)
             if not oidcConfig.disable_userinfo_header then
                 utils.injectUser(response, oidcConfig.userinfo_header_name)
             end
+            return
         end
 
     --end
