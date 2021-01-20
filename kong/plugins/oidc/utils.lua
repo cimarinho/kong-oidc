@@ -134,6 +134,14 @@ local function set_consumer(consumer, credential)
     end
 end
 
+function M.injectHeaderByToken(accessToken, header_names)
+    kong.log.info(injectHeaderByToken)
+    kong.log.info(accessToken)
+    for i, value in ipairs(oidcConfig.headers_jwks) do
+        kong.log.info(value)
+    end
+end
+
 function M.injectAccessToken(accessToken, headerName, bearerToken)
     ngx.log(ngx.DEBUG, "Injecting " .. headerName)
     local token = accessToken
@@ -187,7 +195,6 @@ function M.injectHeaders(header_names, header_claims, sources)
             end
         end
     end
-
     kong.service.request.set_header("teste", "teste123")
 end
 
