@@ -140,6 +140,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local token_jwt
     for  token in string.gmatch(header, "[^%,]+") do
         token_jwt = token:sub(8)
+        break
     end
     kong.log.info(token_jwt)
     for i, value in ipairs(header_names) do
