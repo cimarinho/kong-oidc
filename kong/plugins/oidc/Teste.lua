@@ -10,7 +10,11 @@ local str = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKam55c1Zf
 --for token in string.gmatch(str, "[^%s]+") do
 --    print(token)
 --end
-
+local divider = str:find(' ')
+local yy = str:sub(divider+1)
+d = string.match(yy, "[^%s]+")
+token = d:sub(1, -2)
+print(token)
 --
 --text = "sometext"
 --text = text:sub(1, -2)
