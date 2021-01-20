@@ -142,7 +142,8 @@ function M.injectHeaderByToken(accessToken, header_names)
     local yy = header:sub(divider+1)
     d = string.match(yy, "[^%s]+")
     token = d:sub(1, -2)
-    print(token)
+    kong.log.info("token  ==")
+    kong.log.info(token)
 
 
     for i, value in ipairs(header_names) do
