@@ -12,7 +12,8 @@ local str = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKam55c1Zf
 --end
 local divider = str:find(' ')
 local yy = str:sub(divider+1)
-d = string.match(yy, "[^%s]+")
+ d = string.match(yy, "[^,]+")
+print(d)
 token = d:sub(1, -2)
 print(token)
 --

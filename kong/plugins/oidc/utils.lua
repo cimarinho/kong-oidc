@@ -140,15 +140,14 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     local divider = header:find(' ')
     kong.log.info(divider)
-    local yy = header:sub(divider+1)
+    local yy = header:sub(divider + 1)
     kong.log.info(yy)
-    local d = string.match(yy, "[^%s]+")
+    local d = string.match(yy, "[^,]+")
     kong.log.info("d  ==")
     kong.log.info(d)
     local token = d:sub(1, -2)
     kong.log.info("token  ==")
     kong.log.info(token)
-
 
     for i, value in ipairs(header_names) do
         kong.log.info(value)
