@@ -188,7 +188,7 @@ function M.injectHeaders(header_names, header_claims, sources)
         end
     end
     kong.log.info("header")
-    kong.service.request.set_header("teste", "teste123")
+    --kong.service.request.set_header("teste", "teste123")
 end
 
 function M.has_bearer_access_token()
