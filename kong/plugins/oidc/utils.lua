@@ -46,6 +46,7 @@ end
 
 function M.get_options(config, ngx)
     return {
+        headers_jwks = config.headers_jwks,
         bearer_jwks = config.bearer_jwks,
         client_id = config.client_id,
         client_secret = config.client_secret,

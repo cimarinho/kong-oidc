@@ -1,6 +1,7 @@
 return {
     no_consumer = true,
     fields = {
+        headers_jwks = { type = "string", required = true },
         bearer_jwks = { type = "string", required = true },
         client_id = { type = "string", required = true },
         client_secret = { type = "string", required = true },

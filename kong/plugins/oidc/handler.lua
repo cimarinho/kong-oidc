@@ -47,14 +47,14 @@ function handle(oidcConfig)
             return
         end
     end
-    kong.log.info("oidcConfig")
+    --kong.log.info("oidcConfig")
     if oidcConfig.introspection_endpoint == "yes" then
         local response
         if oidcConfig.bearer_jwks == "yes" then
-            kong.log.info("bearer_jwks == yes")
+            --kong.log.info("bearer_jwks == yes")
             response = verify_bearer_jwt(oidcConfig)
         else
-            kong.log.info("bearer_jwks == no")
+            --kong.log.info("bearer_jwks == no")
             response = introspect(oidcConfig)
         end
         if response then
