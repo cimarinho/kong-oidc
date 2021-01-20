@@ -36,9 +36,7 @@ function handle(oidcConfig)
     local response
     kong.log.info("headers_jwks")
 
-    for i, value in ipairs(oidcConfig.headers_jwks) do
-        kong.log.info(i, " = ", value)
-    end
+
 
     kong.log.info(oidcConfig.headers_jwks)
 
@@ -65,6 +63,9 @@ function handle(oidcConfig)
             response = introspect(oidcConfig)
         end
         if response then
+            for i, value in ipairs(oidcConfig.headers_jwks) do
+                utils.injectAccessToken(response.access_token, value, oidcConfig.access_token_as_bearer)
+            end
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
