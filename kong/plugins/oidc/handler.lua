@@ -157,6 +157,10 @@ function verify_bearer_jwt(oidcConfig)
 
     kong.log.info("oidcConfig ----------------")
     kong.log.info(oidcConfig.bearer_only)
+    kong.log.info(oidcConfig.access_token_header_as_bearer)
+    kong.log.info(oidcConfig.bearer_jwt_auth_enable)
+    kong.log.info(oidcConfig.bearer_jwt_auth_allowed_auds)
+
     kong.log.info(oidcConfig.bearer_jwt_auth_signing_algs)
 
 
