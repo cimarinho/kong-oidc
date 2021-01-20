@@ -34,9 +34,9 @@ end
 
 function handle(oidcConfig)
     local response
-    kong.log("handle")
+    kong.log.err("handle")
     if oidcConfig.bearer_jwt_auth_enable then
-        kong.log.info(" handle  verify_bearer_jwt")
+        kong.log.err(" handle  verify_bearer_jwt")
         response = verify_bearer_jwt(oidcConfig)
         if response then
             utils.setCredentials(response)
@@ -50,7 +50,7 @@ function handle(oidcConfig)
     end
 
     if oidcConfig.introspection_endpoint then
-        kong.log.info(" handle  introspection_endpoint")
+        kong.log.err(" handle  introspection_endpoint")
         response = introspect(oidcConfig)
         if response then
             utils.setCredentials(response)
@@ -118,9 +118,9 @@ function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
         --if oidcConfig.bearer_jwks == "yes" then
 
-        kong.log.info('ANTES JWT verify failed: ')
+        kong.log.err('ANTES JWT verify failed: ')
         local res, err = require("resty.openidc").bearer_jwt_verify(oidcConfig)
-        kong.log.info('DEPOIS JWT verify failed: ')
+        kong.log.err('DEPOIS JWT verify failed: ')
 
         if err then
             kong.log.err('Bearer JWT verify failed: ' .. err)
