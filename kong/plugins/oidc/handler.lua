@@ -49,7 +49,7 @@ function handle(oidcConfig)
         end
     end
     kong.log.info("oidcConfig")
-    if oidcConfig.introspection_endpoint then
+    if oidcConfig.introspection_endpoint == "yes" then
         local response
         if oidcConfig.bearer_jwks == "yes" then
             kong.log.info("bearer_jwks == yes")
