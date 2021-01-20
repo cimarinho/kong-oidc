@@ -166,14 +166,14 @@ function verify_bearer_jwt(oidcConfig)
     -- setup controlled configuration for bearer_jwt_verify
     local opts = {
         accept_none_alg = false,
-        accept_unsupported_alg = false
-        --token_signing_alg_values_expected = oidcConfig.bearer_jwt_auth_signing_algs,
-        --discovery = oidcConfig.discovery,
-        --timeout = oidcConfig.timeout,
-        --ssl_verify = oidcConfig.ssl_verify
+        accept_unsupported_alg = false,
+        token_signing_alg_values_expected = oidcConfig.bearer_jwt_auth_signing_algs,
+        discovery = oidcConfig.discovery,
+        timeout = oidcConfig.timeout,
+        ssl_verify = oidcConfig.ssl_verify
     }
 
-    kong.log.info("opts ----------------"..opts)
+    kong.log.info("opts ----------------")
 
     local discovery_doc, err = require("resty.openidc").get_discovery_doc(opts)
     if err then
@@ -181,15 +181,18 @@ function verify_bearer_jwt(oidcConfig)
        return nil
     end
 
-    kong.log.info("discovery_doc ----------------"..discovery_doc)
+    kong.log.info("discovery_doc ----------------")
+    kong.log.info(discovery_doc)
 
     local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds or oidcConfig.client_id
 
-    kong.log.info("allowed_auds ----------------"..allowed_auds)
+    kong.log.info("allowed_auds ----------------")
+    kong.log.info(allowed_auds)
 
     local jwt_validators = require "resty.jwt-validators"
 
-    kong.log.info("jwt_validators ----------------"..jwt_validators)
+    kong.log.info("jwt_validators ----------------")
+    kong.log.info(jwt_validators)
 
     jwt_validators.set_system_leeway(120)
     local claim_spec = {
@@ -205,7 +208,8 @@ function verify_bearer_jwt(oidcConfig)
         nbf = jwt_validators.opt_is_not_before(),
     }
 
-    kong.log.info("claim_spec ----------------"..claim_spec)
+    kong.log.info("claim_spec ----------------")
+    kong.log.info(claim_spec)
 
     local json, err, token = require("resty.openidc").bearer_jwt_verify(opts, claim_spec)
     if err then
