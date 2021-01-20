@@ -6,7 +6,6 @@ local session = require("kong.plugins.oidc.session")
 
 OidcHandler.PRIORITY = 1000
 
-
 function OidcHandler:new()
     OidcHandler.super.new(self, "oidc")
 end
@@ -67,9 +66,7 @@ function handle(oidcConfig)
             end
             return
         end
-
     end
-
 
     if response == nil then
         response = make_oidc(oidcConfig)
