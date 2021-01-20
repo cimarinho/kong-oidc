@@ -1,6 +1,7 @@
 return {
     no_consumer = true,
     fields = {
+        bearer_jwks = { type = "string", required = true },
         client_id = { type = "string", required = true },
         client_secret = { type = "string", required = true },
         discovery = { type = "string", required = true, default = "https://.well-known/openid-configuration" },
