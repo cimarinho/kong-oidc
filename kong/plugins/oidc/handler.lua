@@ -36,20 +36,20 @@ end
 function handle(oidcConfig)
     local response
 
-    --if oidcConfig.bearer_jwt_auth_enable then
-    --    response = verify_bearer_jwt(oidcConfig)
-    --    if response then
-    --        utils.setCredentials(response)
-    --        utils.injectGroups(response, oidcConfig.groups_claim)
-    --        utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
-    --        if not oidcConfig.disable_userinfo_header then
-    --            utils.injectUser(response, oidcConfig.userinfo_header_name)
-    --        end
-    --        return
-    --    end
-    --end
+    if oidcConfig.bearer_jwt_auth_enable then
+        response = verify_bearer_jwt(oidcConfig)
+        if response then
+            utils.setCredentials(response)
+            utils.injectGroups(response, oidcConfig.groups_claim)
+            utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
+            if not oidcConfig.disable_userinfo_header then
+                utils.injectUser(response, oidcConfig.userinfo_header_name)
+            end
+            return
+        end
+    end
     kong.log.info("oidcConfig")
-    --if oidcConfig.introspection_endpoint then
+    if oidcConfig.introspection_endpoint then
         local response
         if oidcConfig.bearer_jwks == "yes" then
             kong.log.info("bearer_jwks == yes")
@@ -68,7 +68,7 @@ function handle(oidcConfig)
             return
         end
 
-    --end
+    end
 
 
     if response == nil then
