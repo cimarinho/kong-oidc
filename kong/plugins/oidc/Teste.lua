@@ -6,14 +6,14 @@
 
 local header = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKam55c1ZfSkZwVElxTDEtbDNZQ0VIOFFMYmhhS19GS1pBVjN3dTRVQ3p3In0.eyJleHAiOjE2MTExNzc2MTgsImlhdCI6MTYxMTE3NzMxOCwianRpIjoiNDI4NzM1ODAtMzk3MC00Y2VmLTg5MWEtYmJjNTUyYjY4M2VjIiwiaXNzIjoiaHR0cDovLzM0LjEyMy4yMDguMjM4L2F1dGgvcmVhbG1zL2FwaWdlZSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI2Y2NhZTZmNC1hMGVhLTQxZTUtOGZmMC1hYjgzOWU1NDA3ZjkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjbGllbnQtdHdvIiwic2Vzc2lvbl9zdGF0ZSI6IjVmZDBiM2I2LWEyZTktNGVmYS04MjFkLTEwZDY4MDk5MmRjMSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsic2VsbGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6ImpvZSIsInByZWZlcnJlZF91c2VybmFtZSI6ImpvZSIsImZhbWlseV9uYW1lIjoiam9lIn0.PhNnJ8xaoRbltyPZiD7ECOkjFrV5SgnlTm3B98MikHBLAdNX7oElJlEKyqtV1Zmjdiz-XgJUsDPjegr5fxWoLBqO_27ZyS5oz1haaOs_tpu8vqxRUlu8Ir6qv3kBK4t32f3ge7YHGH3yP3D2DxVwKOXlzLUi07pyjFYfZv7QNIHRpodcRgJ1JIzAa9_X6kdVzhmWSJjU3ICdMSFGftWMOF2tsg4cXqgHL4x71WpxT1JhmWJuI5IqipkXkI4_VNOshxsyi-6KT3ESI3oBoURwcKDao7nk6PXJJZgCLu9mWGZtlwu6Ec2jqt1wbU8kcdXuXVjQPv1WLnKs5c-viKaDk, client: 172.17.0.1, server: kong, request: \"GET / HTTP/1.1\", host: \"localhost:8000\""
 
+print(header:sub(8,1216))
 
-
-local token_jwt
-local itera = 0
-for  token in string.gmatch(header, "[^%,]+") do
-        print(token:sub(8))
-end
-print(token_jwt)
+--local token_jwt
+--local itera = 0
+--for  token in string.gmatch(header, "[^%,]+") do
+--        print(token:sub(8))
+--end
+--print(token_jwt)
 
     --print(string.sub ("ABCDEF", 2, 3))  --> BC
     --print(string.sub ("ABCDEF", 3)  )   --> CDEF
