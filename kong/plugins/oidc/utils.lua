@@ -46,7 +46,7 @@ end
 
 function M.get_options(config, ngx)
     return {
-        bearer_jwks = "yes",
+        bearer_jwks = "no",
         client_id = config.client_id,
         client_secret = config.client_secret,
         discovery = config.discovery,
