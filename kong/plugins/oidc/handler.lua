@@ -168,11 +168,10 @@ function verify_bearer_jwt(oidcConfig)
     }
 
     local discovery_doc, err = require("resty.openidc").get_discovery_doc(opts)
-    --if err then
-        kong.log.err('Teste Allan Discovery document retrieval for Bearer JWT verify failed')
-        kong.log.info("teste MArinho")
-        --return nil
-    --end
+    if err then
+        kong.log.err('Discovery document retrieval for Bearer JWT verify failed' ..err)
+       return nil
+    end
 
     local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds or oidcConfig.client_id
 
