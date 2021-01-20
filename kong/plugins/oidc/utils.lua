@@ -1,6 +1,6 @@
 local cjson = require("cjson")
 local constants = require "kong.constants"
-local jwt = require("resty.jwt")
+--local jwt = require("resty.jwt")
 local M = {}
 
 local function parseFilters(csvFilters)
