@@ -1,5 +1,6 @@
 local cjson = require("cjson")
 local constants = require "kong.constants"
+
 local M = {}
 
 local function parseFilters(csvFilters)
