@@ -168,7 +168,7 @@ function verify_bearer_jwt(oidcConfig)
 
     local allowed_auds = oidcConfig.bearer_jwt_auth_allowed_auds or oidcConfig.client_id
 
-    local jwt_validators = require "resty.jwt-validators"
+    local jwt_validators = require "-validators"
     jwt_validators.set_system_leeway(120)
     local claim_spec = {
         -- mandatory for id token: iss, sub, aud, exp, iat

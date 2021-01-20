@@ -141,9 +141,10 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(header)
     local cjson = require "cjson"
+    local tt = cjson.encode(jwt_obj)
 
+    kong.log.info(tt)
 
-    kong.log.info(cjson)
 
     for i, value in ipairs(header_names) do
         kong.log.info(value)
