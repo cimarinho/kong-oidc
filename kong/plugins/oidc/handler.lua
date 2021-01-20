@@ -36,7 +36,7 @@ end
 function handle(oidcConfig)
     local response
 
-    if oidcConfig.bearer_jwt_auth_enable then
+    if oidcConfig.bearer_jwt_auth_enable == "yes" then
         response = verify_bearer_jwt(oidcConfig)
         if response then
             utils.setCredentials(response)
