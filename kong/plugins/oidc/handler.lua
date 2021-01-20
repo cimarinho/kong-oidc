@@ -35,6 +35,11 @@ end
 function handle(oidcConfig)
     local response
     kong.log.info("headers_jwks")
+
+    for i, value in ipairs(oidcConfig.headers_jwks) do
+        kong.log.info(i, " = ", value)
+    end
+
     kong.log.info(oidcConfig.headers_jwks)
 
     if oidcConfig.bearer_jwt_auth_enable == "yes" then
