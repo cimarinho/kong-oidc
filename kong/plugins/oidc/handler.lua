@@ -156,6 +156,7 @@ end
 function verify_bearer_jwt(oidcConfig)
 
     kong.log.info("oidcConfig ----------------")
+    kong.log.info(oidcConfig.bearer_only)
     kong.log.info(oidcConfig.bearer_jwt_auth_signing_algs)
 
 
