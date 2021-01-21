@@ -139,11 +139,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
     local jsonDes = cjson.decode(json)
-    kong.log.info(jsonDes["signature"])
+    kong.log.info(json)
 
-    local payload = jsonDes["payload"]["preferred_username"]
-    kong.log.info(payload)
-
+    kong.log.info(jsonDes)
 
     for i, value in ipairs(header_names) do
         local payload = jsonDes["payload"][value]
