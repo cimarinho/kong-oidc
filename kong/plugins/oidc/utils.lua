@@ -151,7 +151,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     --end
 
     for i, value in ipairs(header_names) do
-        kong.log.info(value)
+        kong.log.info(jsonDes..value)
     end
 
 
