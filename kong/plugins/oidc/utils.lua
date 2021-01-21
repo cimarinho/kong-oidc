@@ -145,10 +145,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt_obj = jwt:load_jwt(accessToken)
     kong.log.info(jwt_obj)
     local json = cjson.encode(jwt_obj)
-
-    value = cjson.decode(jwt_obj)
-
     kong.log.info(json)
+
+    local value = cjson.decode(jwt_obj)
     kong.log.info(value)
 
 
