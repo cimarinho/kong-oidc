@@ -136,6 +136,9 @@ end
 
 function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
+
+    kong.log.info(accessToken)
+
     local header = ngx.req.get_headers()['Authorization']
 
     local jwt = require "resty.jwt"
