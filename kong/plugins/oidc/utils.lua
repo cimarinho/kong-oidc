@@ -146,8 +146,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(jwt_obj)
     local json = cjson.encode(jwt_obj)
 
-    kong.log.info(json)
-
+    kong.log.info(json.email_verified)
+    kong.log.info(valid)
+    kong.log.info(json.payload.name)
 
 
 
