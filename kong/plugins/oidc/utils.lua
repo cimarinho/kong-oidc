@@ -144,12 +144,10 @@ function M.injectHeaderByToken(accessToken, header_names)
     local payload = jsonDes["payload"]["preferred_username"]
     kong.log.info(payload)
 
-    local payload2 = jsonDes["payload"]["header"]["kid"]
-    kong.log.info(payload2)
-
 
     for i, value in ipairs(header_names) do
-        kong.log.info(value)
+        local payload = jsonDes["payload"][value]
+        kong.log.info(payload)
     end
 
 

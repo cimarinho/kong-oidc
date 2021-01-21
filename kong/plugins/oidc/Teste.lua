@@ -8,16 +8,15 @@
 local c = {"'payload'", "'azp'"}
 local size = #c
 print(size)
---local table = {
---    nome = "Marcelo",
---    sobreNome = {
---        [
---
---        ]
---
---    },
---    idade = 20,
---}
+local table = {
+    nome = "Marcelo",
+    sobreNome = {
+        teste = "ewewew"
+    },
+    idade = 20,
+}
+
+print(table.sobreNome.teste)
 
 
 --print(table.sobreNome.s1)
