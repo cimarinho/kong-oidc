@@ -147,9 +147,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     local json = cjson.encode(jwt_obj)
     kong.log.info(json)
 
+    kong.log.info(json.signature)
 
-
-
+    kong.log.info(json['signature')
 
 
     for i, value in ipairs(header_names) do
