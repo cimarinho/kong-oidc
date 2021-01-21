@@ -149,7 +149,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(json.signature)
 
-    kong.log.info(json['signature')
+    kong.log.info(json["signature"])
 
 
     for i, value in ipairs(header_names) do
