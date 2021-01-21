@@ -139,6 +139,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(accessToken)
 
+    kong.log.info(accessToken:sub(1, 1210))
 
     local jwt = require "resty.jwt"
 
@@ -147,8 +148,8 @@ function M.injectHeaderByToken(accessToken, header_names)
     local json = cjson.encode(jwt_obj)
     kong.log.info(json)
 
-    local value = cjson.decode(jwt_obj)
-    kong.log.info(value)
+    --local value = cjson.decode(jwt_obj)
+    --kong.log.info(value)
 
 
 
