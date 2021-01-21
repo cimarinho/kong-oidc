@@ -148,7 +148,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(json)
 
     local jsonDes = cjson.decode(json)
-    kong.log.info(jsonDes)
+    kong.log.info(jsonDes["signature"])
 
 
     for i, value in ipairs(header_names) do
