@@ -187,6 +187,8 @@ function verify_bearer_jwt(oidcConfig)
         return nil
     end
 
+    kong.log.info(token)
+
     return json
 end
 
