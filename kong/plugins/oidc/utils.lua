@@ -151,8 +151,11 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     local payload = jsonDes["payload"]
 
-    kong.log.info(payload)
+    kong.log.info(payload["azp"])
 
+    local payload2= jsonDes["payload"]["iat"]
+
+    kong.log.info(payload2)
 
     for i, value in ipairs(header_names) do
         kong.log.info(value)
