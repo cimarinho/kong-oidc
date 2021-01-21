@@ -5,8 +5,36 @@
 ---
 
 
-local c = "json['payload']['header']['kid']"
-print(c)
+local c = {"'payload'", "'azp'"}
+local size = #c
+
+local table = {
+    nome = "Marcelo",
+    sobreNome = {
+        [
+
+        ]
+
+    },
+    idade = 20,
+}
+
+
+print(table.sobreNome.s1)
+local v = {}
+
+for i, value in ipairs(c) do
+
+    if i == size then
+
+    end
+end
+
+
+--print(type(c))
+--for i, value in ipairs(c) do
+--    print(value)
+--end
 
 
 

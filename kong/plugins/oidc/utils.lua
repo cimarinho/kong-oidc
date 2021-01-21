@@ -141,14 +141,15 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     kong.log.info(jsonDes["signature"])
 
-    local payload = jsonDes["payload"]
+    local payload = jsonDes["payload"]["preferred_username"]
+    kong.log.info(payload)
 
-    kong.log.info(payload["azp"])
+    local payload2 = jsonDes["payload"]["realm_access"]["roles"]
+    kong.log.info(payload2)
 
-
-    --for i, value in ipairs(payload2) do
-    --    kong.log.info(value)
-    --end
+    for i, value in ipairs(payload2) do
+        kong.log.info(value)
+    end
 
     for i, value in ipairs(header_names) do
         local a  =  jsonDes[value]
