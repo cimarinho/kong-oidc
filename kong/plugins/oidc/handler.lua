@@ -56,13 +56,12 @@ function handle(oidcConfig)
         if oidcConfig.bearer_jwks == "yes" then
             kong.log.info("bearer_jwks == yes")
             response, token  = verify_bearer_jwt(oidcConfig)
-            kong.log.info(token)
         else
             kong.log.info("bearer_jwks == no")
             response = introspect(oidcConfig)
         end
         if response then
-            utils.injectHeaderByToken(response.access_token, oidcConfig.headers_jwks)
+            utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
