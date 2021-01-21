@@ -5,18 +5,139 @@
 ---
 
 
-local c = {"'payload'", "'azp'"}
-local size = #c
-print(size)
-local table = {
+
+local tablew = {
     nome = "Marcelo",
     sobreNome = {
-        teste = "ewewew"
+        teste = "ewewew",
+        teste2 = {
+            value = "testeewew"
+        }
     },
     idade = 20,
 }
 
-print(table.sobreNome.teste)
+local c = { "sobreNome", "teste2", "value" }
+
+local days = {"monday", "tuesday", etc}
+
+for i = 1, #days do
+    local t= jsonTable.properties[days[i]].night.temperature
+end
+
+--local size = #c
+--
+--
+--local value = "tablew"
+--for line = 1, size do
+--    value = value .. "[c[" .. line .."]]"
+--end
+--
+--print(value)
+--print(tablew[c[1]][c[2]][c[3]])
+--
+--
+--for key,value in pairs(getmetatable(o)) do
+--    print(key, value)
+--end
+
+--local Class = {}
+--
+--function Class.new(factor)
+--    local instance = {factor = factor}
+--    return setmetatable(instance, {__index = Class})
+--end
+--
+--function Class:multiply(n)
+--    return self.factor * n
+--end
+--
+--local m = Class.new(5)
+--print(m:multiply(6))
+
+
+--
+--function Lib()
+--    function foo(x, y) return x+y end
+--    function goo(x, y) return x-y end
+--    return self
+--end
+--Lib()
+--print(foo(3, 2))
+
+
+
+--
+--
+--function adder(x)
+--    -- The returned function is created when adder is
+--    -- called, and remembers the value of x:
+--    return function (y) return x  end
+--end
+--a1 = adder(value)
+--
+--print("ewwwwwwwwwwwwww" , a1("tablew[c[1]][c[2]][c[3]]"))
+--
+--print(_G['_G'] == _G)
+--
+--defaultFavs = {animal = 'gru', food = 'donuts'}
+--myFavs = {food = 'pizza'}
+--setmetatable(myFavs, {__index = defaultFavs})
+--eatenBy = myFavs.animal
+--
+--print(eatenBy)
+
+
+--functionTable = {}
+--testString = "tablew[c[1]][c[2]][c[3]]"
+--
+--function a(param)
+--    print( param)
+--end
+--
+--functionTable[1] = "a"
+--
+--load(functionTable[1].."(testString)")()
+
+
+
+
+
+
+
+--for line in size do
+--    table.insert(t)
+--end
+--s = table.concat(t, "\n") .. "\n"
+
+
+
+local k
+--for i = 1, #c do
+--    if i == size then
+--
+--    else
+--        k ="[c[i]]"
+--    end
+--end
+
+
+
+
+
+--print(table["sobreNome"]["teste"])
+
+--local size = #c
+--print(size)
+--local table = {
+--    nome = "Marcelo",
+--    sobreNome = {
+--        teste = "ewewew"
+--    },
+--    idade = 20,
+--}
+--
+--print(table.sobreNome.teste)
 
 
 --print(table.sobreNome.s1)
@@ -56,9 +177,9 @@ print(table.sobreNome.teste)
 --end
 --print(token_jwt)
 
-    --print(string.sub ("ABCDEF", 2, 3))  --> BC
-    --print(string.sub ("ABCDEF", 3)  )   --> CDEF
-    --print(string.sub ("ABCDEF", -1))    -->
+--print(string.sub ("ABCDEF", 2, 3))  --> BC
+--print(string.sub ("ABCDEF", 3)  )   --> CDEF
+--print(string.sub ("ABCDEF", -1))    -->
 
 
 --for token in string.gmatch(str, "[^%s]+") do
@@ -85,3 +206,16 @@ print(table.sobreNome.teste)
 --print(string.sub("Hello Lua user", -8)  )   -- 8 from the end until the end   Lua user
 --print(string.sub("Hello Lua user", -8, 9))  -- 8 from the end until 9 from the start  Lua
 --print(string.sub("Hello Lua user", -8, -6) )-- 8 from the end until 6 from the end ua
+
+--//aceita somente c <= 5
+
+--if i == 1 then
+--    print(tablew[c[1]])
+--elseif i == 2 then
+--    print(tablew[c[1]][c[2]])
+--else
+--    print(tablew[c[1]][c[2]][c[3]])
+--end
+--
+--
+--print(tablew[c[1]][c[2]][c[3]])
