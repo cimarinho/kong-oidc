@@ -135,21 +135,23 @@ local function set_consumer(consumer, credential)
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
-    kong.log.info("injectHeaderByToken")
-
-    kong.log.info(type(accessToken))
-    kong.log.info(accessToken)
+    --kong.log.info("injectHeaderByToken")
+    --kong.log.info(type(accessToken))
+    --kong.log.info(accessToken)
 
     local jwt = require "resty.jwt"
 
-    --local jwt_obj = jwt:load_jwt(string.sub(accessToken,1,1210))
     local jwt_obj = jwt:load_jwt(accessToken)
-    kong.log.info(jwt_obj)
+    --kong.log.info(jwt_obj)
     local json = cjson.encode(jwt_obj)
-    kong.log.info(json)
+   --kong.log.info(json)
 
     local jsonDes = cjson.decode(json)
     kong.log.info(jsonDes["signature"])
+
+    local payload = jsonDes["payload"]
+
+    kong.log.info(payload)
 
 
     for i, value in ipairs(header_names) do
