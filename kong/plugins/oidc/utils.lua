@@ -137,6 +137,11 @@ end
 function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
     local header = ngx.req.get_headers()['Authorization']
+
+    kong.log.info(type(header))
+    local token_jwt = header:sub(8,1216)
+    kong.log.info(token_jwt)
+
     for i, value in ipairs(header_names) do
         kong.log.info(value)
     end
