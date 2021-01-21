@@ -135,17 +135,9 @@ local function set_consumer(consumer, credential)
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
-    --kong.log.info("injectHeaderByToken")
-    --kong.log.info(type(accessToken))
-    --kong.log.info(accessToken)
-
     local jwt = require "resty.jwt"
-
     local jwt_obj = jwt:load_jwt(accessToken)
-    --kong.log.info(jwt_obj)
     local json = cjson.encode(jwt_obj)
-   --kong.log.info(json)
-
     local jsonDes = cjson.decode(json)
     kong.log.info(jsonDes["signature"])
 
@@ -153,15 +145,13 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(payload["azp"])
 
-    local payload2= jsonDes["payload"]["realm_access"]["roles"]
+    local payload2= jsonDes['payload']['realm_access']['roles']
 
     for i, value in ipairs(payload2) do
         kong.log.info(value)
     end
 
-    for i, value in ipairs(header_names) do
-        kong.log.info(value)
-    end
+
 end
 
 function M.injectAccessToken(accessToken, headerName, bearerToken)
