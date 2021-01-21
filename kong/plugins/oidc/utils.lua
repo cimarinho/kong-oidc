@@ -153,7 +153,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(payload["azp"])
 
-    local payload2= jsonDes["payload"]["iat"]
+    local payload2= jsonDes["payload"]["realm_access"]["roles"]
 
     kong.log.info(payload2)
 
