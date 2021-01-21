@@ -8,7 +8,7 @@ local accessToken = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKam55c1Z
 --print(type(header))
 --print(header:sub(1,1210))
 
-print(string.sub(accessToken,1,124))
+print(string.sub (accessToken, 1 ,100))
 
 --for token in string.gmatch(accessToken, "[^%,]+") do
 --    print(token)
@@ -39,3 +39,14 @@ print(string.sub(accessToken,1,124))
 --text = "sometext"
 --text = text:sub(1, -2)
 --print(text)
+
+
+
+
+
+print(string.sub("Hello,Lua,user", 1 ,5) )
+print(string.sub("Hello, Lua, user", 7) )     -- from character 7 including 7 until the endLua user
+print(string.sub("Hello Lua user", 7, 9) )  -- from character 7 until and including 9    Lua
+print(string.sub("Hello Lua user", -8)  )   -- 8 from the end until the end   Lua user
+print(string.sub("Hello Lua user", -8, 9))  -- 8 from the end until 9 from the start  Lua
+print(string.sub("Hello Lua user", -8, -6) )-- 8 from the end until 6 from the end ua
