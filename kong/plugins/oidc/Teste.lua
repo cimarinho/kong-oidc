@@ -9,9 +9,9 @@
 local tablew = {
     nome = "Marcelo",
     sobreNome = {
-        teste = "ewewew",
+        teste = "teste",
         teste2 = {
-            value = "testeewew"
+            value = "value2"
         }
     },
     idade = 20,
@@ -19,12 +19,41 @@ local tablew = {
 
 local c = { "sobreNome", "teste2", "value" }
 
-local days = {"monday", "tuesday", etc}
-
-for i = 1, #days do
-    local t= jsonTable.properties[days[i]].night.temperature
+function t (idx, ele)
+    return idx, ele
 end
 
+local value = {}
+for idx, ele in pairs(tablew) do
+    value[idx] =  t(idx,ele)
+end
+
+
+print("-------------")
+for i, linha in pairs(value) do
+    print(i, linha)
+end
+
+
+
+--function t (idx, ele)
+--    if type(ele) == "table" then
+--        for idx2, ele2 in pairs(ele) do
+--            return t(idx2, ele2)
+--        end
+--    else
+--        return idx, ele
+--    end
+--end
+--
+--local value = {}
+--for idx, ele in pairs(tablew) do
+--    print("www ",t(idx, ele))
+--end
+--print("-------------")
+--for i, linha in pairs(value) do
+--    print(i, linha)
+--end
 --local size = #c
 --
 --
