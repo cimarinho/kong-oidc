@@ -144,11 +144,11 @@ function M.injectHeaderByToken(accessToken, header_names)
     local cjson = require "cjson"
     local jwt_obj = jwt:load_jwt(accessToken)
     kong.log.info(jwt_obj)
-    local json = cjson.decode(jwt_obj)
+    local json = cjson.encode(jwt_obj)
 
     kong.log.info(json)
     kong.log.info(json['signature'])
-    --kong.log.info(json.payload)
+
 
 
 
