@@ -139,13 +139,13 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
     local jsonDes = cjson.decode(json)
-    kong.log.info(json)
+ //   kong.log.info(json)
 
     kong.log.info(jsonDes["payload"]["realm_access"]["roles"][1])
 
     for i, value in ipairs(header_names) do
-        local payload = jsonDes["payload"][value]
-        kong.log.info(payload)
+        --local payload = jsonDes["payload"][value]
+        kong.log.info(value)
     end
 
 
