@@ -142,7 +142,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(jsonDes["payload"]["realm_access"]["roles"][1])
 
     local ids = {}
-    for idx, ele in pairs(json_foo) do
+    for idx, ele in pairs(jsonDes) do
         ids[idx] = ele["roles"]
     end
 
