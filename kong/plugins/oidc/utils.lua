@@ -155,7 +155,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     local payload2= jsonDes["payload"]["realm_access"]["roles"]
 
-    kong.log.info(payload2)
+    kong.log.info(payload2[1])
 
     for i, value in ipairs(header_names) do
         kong.log.info(value)
