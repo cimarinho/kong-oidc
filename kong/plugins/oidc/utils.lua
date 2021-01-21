@@ -139,7 +139,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(accessToken)
 
-    local vv = accessToken:sub(1, 1210)
+    local vv = accessToken:sub(1, 100)
 
     kong.log.info(vv)
 
