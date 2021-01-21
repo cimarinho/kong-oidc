@@ -146,8 +146,10 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(jwt_obj)
     local json = cjson.encode(jwt_obj)
 
+    value = cjson.decode(json_text)
+
     kong.log.info(json)
-    kong.log.info(json['signature'])
+    kong.log.info(value)
 
 
 
