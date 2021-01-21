@@ -144,16 +144,12 @@ function M.injectHeaderByToken(accessToken, header_names)
     local payload = jsonDes["payload"]["preferred_username"]
     kong.log.info(payload)
 
-    local payload2 = jsonDes["payload"]["realm_access"]["roles"]
+    local payload2 = jsonDes["payload"]["header"]["kid"]
     kong.log.info(payload2)
 
-    for i, value in ipairs(payload2) do
-        kong.log.info(value)
-    end
 
     for i, value in ipairs(header_names) do
-        local a  =  jsonDes[value]
-        kong.log.info(a)
+        kong.log.info(value)
     end
 
 
@@ -212,6 +208,7 @@ function M.injectHeaders(header_names, header_claims, sources)
             end
         end
     end
+
     kong.service.request.set_header("teste", "teste123")
 end
 

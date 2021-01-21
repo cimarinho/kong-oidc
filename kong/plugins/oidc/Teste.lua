@@ -7,28 +7,28 @@
 
 local c = {"'payload'", "'azp'"}
 local size = #c
+print(size)
+--local table = {
+--    nome = "Marcelo",
+--    sobreNome = {
+--        [
+--
+--        ]
+--
+--    },
+--    idade = 20,
+--}
 
-local table = {
-    nome = "Marcelo",
-    sobreNome = {
-        [
 
-        ]
-
-    },
-    idade = 20,
-}
-
-
-print(table.sobreNome.s1)
-local v = {}
-
-for i, value in ipairs(c) do
-
-    if i == size then
-
-    end
-end
+--print(table.sobreNome.s1)
+--local v = {}
+--
+--for i, value in ipairs(c) do
+--
+--    if i == size then
+--
+--    end
+--end
 
 
 --print(type(c))
