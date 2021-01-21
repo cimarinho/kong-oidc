@@ -146,9 +146,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(payload["azp"])
 
 
-    for i, value in ipairs(payload2) do
-        kong.log.info(value)
-    end
+    --for i, value in ipairs(payload2) do
+    --    kong.log.info(value)
+    --end
 
     for i, value in ipairs(header_names) do
         kong.log.info(value)
