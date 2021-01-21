@@ -128,9 +128,10 @@ function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
 
         kong.log.info(introspect)
-        response = verify_bearer_jwt(oidcConfig)
+        response, token = verify_bearer_jwt(oidcConfig)
         kong.log.info("response")
         kong.log.info(response)
+        kong.log.info(token)
 
         local res, err = require("resty.openidc").introspect(oidcConfig)
         if err then
@@ -186,10 +187,7 @@ function verify_bearer_jwt(oidcConfig)
         kong.log.err('Bearer JWT verify failed: ' .. err)
         return nil
     end
-
-    kong.log.info(json)
-
-    return json
+    return json, token
 end
 
 return OidcHandler
