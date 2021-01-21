@@ -8,9 +8,11 @@ local accessToken = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKam55c1Z
 --print(type(header))
 --print(header:sub(1,1210))
 
-for token in string.gmatch(accessToken, "[^%,]+") do
-    print(token)
-end
+print(string.sub(accessToken,1,124))
+
+--for token in string.gmatch(accessToken, "[^%,]+") do
+--    print(token)
+--end
 
 --local token_jwt
 --local itera = 0

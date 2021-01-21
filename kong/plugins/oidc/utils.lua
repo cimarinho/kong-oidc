@@ -139,20 +139,22 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(type(accessToken))
     kong.log.info(accessToken)
-    kong.log.info(type(accessToken))
+
+    kong.log.info(string.sub(accessToken,1,124))
+
 
     for token in string.gmatch(accessToken, "[^%,]+") do
         kong.log.info(token)
     end
 
-    kong.log.info(vv)
 
-    local jwt = require "resty.jwt"
 
-    local jwt_obj = jwt:load_jwt(accessToken)
-    kong.log.info(jwt_obj)
-    local json = cjson.encode(jwt_obj)
-    kong.log.info(json)
+    --local jwt = require "resty.jwt"
+    --
+    --local jwt_obj = jwt:load_jwt(accessToken)
+    --kong.log.info(jwt_obj)
+    --local json = cjson.encode(jwt_obj)
+    --kong.log.info(json)
 
     --local value = cjson.decode(jwt_obj)
     --kong.log.info(value)
