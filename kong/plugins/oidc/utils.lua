@@ -140,8 +140,8 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(type(accessToken))
     kong.log.info(accessToken)
 
-    kong.log.info(string.sub(accessToken,1,124))
-
+    --kong.log.info(string.sub(accessToken[0],1,124))
+    kong.log.info(accessToken[1])
 
     for token in string.gmatch(accessToken, "[^%,]+") do
         kong.log.info(token)
