@@ -142,7 +142,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local cjson = require "cjson"
     local jwt_obj = jwt:load_jwt(header)
 
-    local json cjson.encode(jwt_obj)
+    local json = cjson.encode(jwt_obj)
 
     kong.log.info(json)
 
