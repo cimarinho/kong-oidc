@@ -174,6 +174,7 @@ function M.injectHeaderByToken(accessToken, header_names)
             end
         end
     end
+    kong.log.info('size = 0 ', size)
 
 end
 
