@@ -135,7 +135,7 @@ local function set_consumer(consumer, credential)
 end
 
 function M.funcao1 (json, x)
-    return json[x][x1]
+    return json[x]
 end
 function M.funcao2 (json, x, x1)
     return json[x][x1]
