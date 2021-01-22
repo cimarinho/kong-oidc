@@ -13,8 +13,7 @@ local tablew = {
     },
     idade = 20,
 }
-local M = {}
-function M.Lib()
+function Lib()
     function funcao1 (json, x) return json[x] end
     function funcao2 (json, x, x1) return json[x][x1] end
     function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
@@ -22,7 +21,7 @@ function M.Lib()
     return self
 end
 
-
+Lib()
 local c = { "sobreNome teste", "nome", "idade", "sobreNome teste2 value" }
 local size = #c
 function split_header_name(value)
@@ -59,14 +58,14 @@ local header = {}
 for line = 1, size do
     local world = split_header_name(c[line])
     if 1 ==  #world then
-        local a =  M.Lib().funcao1(tablew, world[1])
+        local a = funcao1(tablew, world[1])
         header[c[line]] = a
-    --elseif 2 ==  #world then
-    --    local a = funcao2(tablew, world[1], world[2])
-    --    header[c[line]] = a
-    --elseif 3 ==  #world then
-    --    local a = funcao3(tablew, world[1], world[2], world[3])
-    --    header[c[line]] = a
+    elseif 2 ==  #world then
+        local a = funcao2(tablew, world[1], world[2])
+        header[c[line]] = a
+    elseif 3 ==  #world then
+        local a = funcao3(tablew, world[1], world[2], world[3])
+        header[c[line]] = a
     end
 
 end

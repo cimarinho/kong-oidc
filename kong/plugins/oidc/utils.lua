@@ -170,7 +170,7 @@ function M.injectHeaderByToken(accessToken, header_names)
             local a = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
             header[c[line]] = a
         end
-
+        print(header[c[line]])
     end
     print('fim ')
 
