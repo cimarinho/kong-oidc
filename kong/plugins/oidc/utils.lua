@@ -150,13 +150,6 @@ function M.funcao5 (json, x, x1, x2, x3, x4)
     return json[x][x1][x2][x3][x4]
 end
 
-function M.try(f, catch_f)
-    local status, exception = pcall(f)
-    if not status then
-        catch_f(exception)
-    end
-end
-
 function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info("injectHeaderByToken")
     local jwt = require "resty.jwt"
@@ -171,9 +164,8 @@ function M.injectHeaderByToken(accessToken, header_names)
         kong.log.info("world")
         local world = M.split_header_name(header_names[line])
         kong.log.info(world)
-
-            kong.log.info('add', world)
-            header[header_names[line]] = M.call_header_name(jsonDes, world)
+        kong.log.info('add', world)
+        header[header_names[line]] = M.call_header_name(jsonDes, world)
         kong.log.info(header[header_names[line]])
     end
     kong.log.info("header")
