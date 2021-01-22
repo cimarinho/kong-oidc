@@ -138,25 +138,37 @@ function M.funcao1 (json, x)
     M.try(function()
         return json[x][x1]
     end, function(e)
-        kong.log.info("EROOOOOOOOOOOOOOO")
+        kong.log.debug('erro', 'chave', x)
     end)
 end
 function M.funcao2 (json, x, x1)
     M.try(function()
         return json[x][x1]
     end, function(e)
-        kong.log.info("EROOOOOOOOOOOOOOO")
+        kong.log.debug('erro', 'chave', x, x1)
     end)
 end
-function M.funcao3 (json, x, x1, x3)
+function M.funcao3 (json, x, x1, x2)
     M.try(function()
-        return json[x][x1][x3]
+        return json[x][x1][x2]
     end, function(e)
-        kong.log.info("EROOOOOOOOOOOOOOO")
+        kong.log.debug('erro', 'chave', x, x1, x2)
     end)
 end
-function M.funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
-function M.funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
+function M.funcao4 (json, x, x1, x2, x3)
+    M.try(function()
+        return json[x][x1][x2][x3]
+    end, function(e)
+        kong.log.debug('erro', 'chave', x, x1, x2, x3)
+    end)
+end
+function M.funcao5 (json, x, x1, x2, x3, x4)
+    M.try(function()
+        return json[x][x1][x2][x3][x4]
+    end, function(e)
+        kong.log.debug('erro', 'chave', x, x1, x2, x3,x4)
+    end)
+end
 
 function M.try(f, catch_f)
     local status, exception = pcall(f)
@@ -180,8 +192,8 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info('fim ')
 
     for idx, line in pairs(header) do
-        kong.log.info(M.change_header_name({idx}), '==', line)
-        local nameHeader = M.change_header_name({idx})
+        kong.log.info(M.change_header_name({ idx }), '==', line)
+        local nameHeader = M.change_header_name({ idx })
         kong.log.info(nameHeader);
         if nameHeader == nil or nameHeader == '' then
             kong.service.request.set_header(h, line)
@@ -192,16 +204,16 @@ end
 function M.call_header_name(jsonDes, world)
     kong.log.info(world[1])
     local value
-    if 1 ==  #world then
+    if 1 == #world then
         value = M.funcao1(jsonDes, world[1])
-    elseif 2 ==  #world then
+    elseif 2 == #world then
         value = M.funcao2(jsonDes, world[1], world[2])
-    elseif 3 ==  #world then
+    elseif 3 == #world then
         value = M.funcao3(jsonDes, world[1], world[2], world[3])
-    elseif 4 ==  #world then
-        value = M.funcao4(jsonDes, world[1], world[2], world[3],world[4])
-    elseif 5 ==  #world then
-        value = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
+    elseif 4 == #world then
+        value = M.funcao4(jsonDes, world[1], world[2], world[3], world[4])
+    elseif 5 == #world then
+        value = M.funcao5(jsonDes, world[1], world[2], world[3], world[4], world[5])
     end
     kong.log.info(value)
     return value
@@ -211,9 +223,9 @@ function M.split_header_name(value)
     kong.log.info(value)
     local world = {}
     local idx = 1
-    for  i in string.gmatch(value, "%S+") do
+    for i in string.gmatch(value, "%S+") do
         world[idx] = i
-        idx = idx +1
+        idx = idx + 1
     end
     kong.log.info(world)
     return world
@@ -221,9 +233,8 @@ end
 
 function M.change_header_name(world)
     local m = table.concat(world, " ")
-    return "x_" ..  string.gsub(m, " ", "_")
+    return "x_" .. string.gsub(m, " ", "_")
 end
-
 
 function M.injectAccessToken(accessToken, headerName, bearerToken)
     ngx.log(ngx.DEBUG, "Injecting " .. headerName)
@@ -313,6 +324,5 @@ function M.has_common_item(t1, t2)
     end
     return false
 end
-
 
 return M
