@@ -165,7 +165,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
     local jsonDes = cjson.decode(json)
-
+    kong.log.info(jsonDes)
     local size = #header_names
     kong.log.info(size)
     local header = {}
