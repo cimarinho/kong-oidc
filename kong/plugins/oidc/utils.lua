@@ -182,27 +182,23 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
     local jsonDes = cjson.decode(json)
-    local c = header_names
-    local size = #c
+
+    local size = #header_names
     local header = {}
     for line = 1, size do
-        local world = M.split_header_name(c[line])
-        header[c[line]] = M.call_header_name(jsonDes, world)
+        local world = M.split_header_name(header_names[line])
+        header[header_names[line]] = M.call_header_name(jsonDes, world)
     end
-    kong.log.info('fim ')
 
     for idx, line in pairs(header) do
-        kong.log.info(M.change_header_name({ idx }), '==', line)
         local nameHeader = M.change_header_name({ idx })
-        kong.log.info(nameHeader);
         if nameHeader == nil or nameHeader == '' then
-            kong.service.request.set_header(h, line)
+            kong.service.request.set_header(nameHeader, line)
         end
     end
 end
 
 function M.call_header_name(jsonDes, world)
-    kong.log.info(world[1])
     local value
     if 1 == #world then
         value = M.funcao1(jsonDes, world[1])
@@ -215,19 +211,18 @@ function M.call_header_name(jsonDes, world)
     elseif 5 == #world then
         value = M.funcao5(jsonDes, world[1], world[2], world[3], world[4], world[5])
     end
-    kong.log.info(value)
     return value
 end
 
 function M.split_header_name(value)
-    kong.log.info(value)
+    --kong.log.info(value)
     local world = {}
     local idx = 1
     for i in string.gmatch(value, "%S+") do
         world[idx] = i
         idx = idx + 1
     end
-    kong.log.info(world)
+    --kong.log.info(world)
     return world
 end
 
