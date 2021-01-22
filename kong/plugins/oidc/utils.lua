@@ -143,6 +143,9 @@ function M.funcao2 (json, x, x1)
     return json[x][x1]
 end
 function M.funcao3 (json, x, x1, x2)
+    print( x1)
+    print( x2)
+    print( json)
     print( json[x][x1][x2])
     return json[x][x1][x2]
 end
