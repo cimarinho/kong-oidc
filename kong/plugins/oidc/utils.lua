@@ -170,6 +170,8 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     kong.log.info(jsonDes["payload"]["preferred_username"])
     kong.log.info(jsonDes["header"]["kid"])
+    kong.log.info(jsonDes["payload"]["profile"]["name"])
+
 
     local size = #header_names
     kong.log.info(size)
