@@ -134,6 +134,12 @@ local function set_consumer(consumer, credential)
     end
 end
 
+function funcao1 (json, x) return json[x] end
+function funcao2 (json, x, x1) return json[x][x1] end
+function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
+function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
+function funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
+
 function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
@@ -142,7 +148,6 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     kong.log.info(jsonDes["payload"]["realm_access"]["roles"][1])
 
-    Lib()
     local c = headers_jwks
     local size = #c
 
@@ -158,6 +163,12 @@ function M.injectHeaderByToken(accessToken, header_names)
         elseif 3 ==  #world then
             local a = funcao3(jsonDes, world[1], world[2], world[3])
             header[c[line]] = a
+        elseif 4 ==  #world then
+            local a = funcao4(jsonDes, world[1], world[2], world[3],world[4])
+            header[c[line]] = a
+        elseif 4 ==  #world then
+            local a = funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
+            header[c[line]] = a
         end
 
     end
@@ -169,13 +180,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
 end
 
-function Lib()
-    function funcao1 (json, x) return json[x] end
-    function funcao2 (json, x, x1) return json[x][x1] end
-    function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
-    function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
-    return self
-end
+
 
 function M.split_header_name(value)
     local world = {}
