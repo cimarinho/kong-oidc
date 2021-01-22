@@ -34,14 +34,11 @@ end
 
 function handle(oidcConfig)
     local response
-    kong.log.info("headers_jwks")
-
-    kong.log.info(oidcConfig.headers_jwks)
-
     if oidcConfig.bearer_jwt_auth_enable == "yes" then
-        response = verify_bearer_jwt(oidcConfig)
+        response, token = verify_bearer_jwt(oidcConfig)
         if response then
             utils.setCredentials(response)
+            utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
             if not oidcConfig.disable_userinfo_header then
@@ -50,14 +47,12 @@ function handle(oidcConfig)
             return
         end
     end
-    kong.log.info("oidcConfig")
+
     if oidcConfig.introspection_endpoint == "yes" then
         local response
         if oidcConfig.bearer_jwks == "yes" then
-            kong.log.info("bearer_jwks == yes")
             response, token  = verify_bearer_jwt(oidcConfig)
         else
-            kong.log.info("bearer_jwks == no")
             response = introspect(oidcConfig)
         end
         if response then
@@ -126,13 +121,7 @@ end
 
 function introspect(oidcConfig)
     if utils.has_bearer_access_token() or oidcConfig.bearer_only == "yes" then
-
-        kong.log.info(introspect)
         response, token = verify_bearer_jwt(oidcConfig)
-        kong.log.info("response")
-        kong.log.info(response)
-        kong.log.info(token)
-
         local res, err = require("resty.openidc").introspect(oidcConfig)
         if err then
             if oidcConfig.bearer_only == "yes" then
