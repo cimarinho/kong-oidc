@@ -135,18 +135,23 @@ local function set_consumer(consumer, credential)
 end
 
 function M.funcao1 (json, x)
+    print( json[x])
     return json[x]
 end
 function M.funcao2 (json, x, x1)
+    print( json[x][x1])
     return json[x][x1]
 end
 function M.funcao3 (json, x, x1, x2)
+    print( json[x][x1][x2])
     return json[x][x1][x2]
 end
 function M.funcao4 (json, x, x1, x2, x3)
+    print( json[x][x1][x2][x3])
     return json[x][x1][x2][x3]
 end
 function M.funcao5 (json, x, x1, x2, x3, x4)
+    print( json[x][x1][x2][x3][x4])
     return json[x][x1][x2][x3][x4]
 end
 
