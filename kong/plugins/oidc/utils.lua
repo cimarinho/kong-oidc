@@ -135,54 +135,78 @@ local function set_consumer(consumer, credential)
 end
 
 function M.funcao1 (json, x)
-    kong.log.info(json )
-    kong.log.info(x )
-    kong.log.info(json[x] )
+    print( json[x])
     return json[x]
 end
-function M.funcao2 (json, x, x1) return json[x][x1] end
-function M.funcao3 (json, x, x1, x3) return json[x][x1][x3] end
-function M.funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
-function M.funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
+function M.funcao2 (json, x, x1)
+    print( json[x][x1])
+    return json[x][x1]
+end
+function M.funcao3 (json, x, x1, x2)
+    print( x)
+    print( x1)
+    print( x2)
+    print( json)
+    print( json[x][x1][x2])
+    return json[x][x1][x2]
+end
+function M.funcao4 (json, x, x1, x2, x3)
+    print( json[x][x1][x2][x3])
+    return json[x][x1][x2][x3]
+end
+function M.funcao5 (json, x, x1, x2, x3, x4)
+    print( json[x][x1][x2][x3][x4])
+    return json[x][x1][x2][x3][x4]
+end
 
 function M.injectHeaderByToken(accessToken, header_names)
+    kong.log.info("injectHeaderByToken")
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
+    local cjson = require("cjson")
     local json = cjson.encode(jwt_obj)
     local jsonDes = cjson.decode(json)
-    local c = header_names
-    local size = #c
-
+    kong.log.info(jsonDes)
+    local size = #header_names
+    kong.log.info(size)
     local header = {}
     for line = 1, size do
-        local world = M.split_header_name(c[line])
-        header[c[line]] = M.call_header_name(jsonDes, world)
+        kong.log.info("world")
+        local world = M.split_header_name(header_names[line])
+        kong.log.info(world)
+        kong.log.info('add', world)
+        header[header_names[line]] = M.call_header_name(jsonDes, world)
+        kong.log.info(header[header_names[line]])
     end
-    kong.log.info('fim ')
+    kong.log.info("header")
+    kong.log.info(header)
 
     for idx, line in pairs(header) do
-        kong.log.info(M.change_header_name({idx}), '==', line)
-        local nameHeader = M.change_header_name({idx})
-        kong.log.info(nameHeader);
-        if nameHeader == nil or nameHeader == '' then
-            kong.service.request.set_header(h, line)
+        kong.log.info(idx, ' ', line)
+        local nameHeader = M.change_header_name({ idx })
+        kong.log.info(nameHeader)
+        if nameHeader ~= nil or nameHeader ~= '' then
+            kong.service.request.set_header(nameHeader, line)
+            kong.log.info(nameHeader)
+            kong.log.info(line)
         end
     end
 end
 
 function M.call_header_name(jsonDes, world)
     kong.log.info(world[1])
+    kong.log.info(jsonDes)
     local value
-    if 1 ==  #world then
+    if 1 == #world then
         value = M.funcao1(jsonDes, world[1])
-    elseif 2 ==  #world then
+    elseif 2 == #world then
         value = M.funcao2(jsonDes, world[1], world[2])
-    elseif 3 ==  #world then
+    elseif 3 == #world then
         value = M.funcao3(jsonDes, world[1], world[2], world[3])
-    elseif 4 ==  #world then
-        value = M.funcao4(jsonDes, world[1], world[2], world[3],world[4])
-    elseif 5 ==  #world then
-        value = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
+    elseif 4 == #world then
+        value = M.funcao4(jsonDes, world[1], world[2], world[3], world[4])
+    elseif 5 == #world then
+        value = M.funcao5(jsonDes, world[1], world[2], world[3], world[4], world[5])
     end
     kong.log.info(value)
     return value
@@ -192,9 +216,9 @@ function M.split_header_name(value)
     kong.log.info(value)
     local world = {}
     local idx = 1
-    for  i in string.gmatch(value, "%S+") do
+    for i in string.gmatch(value, "%S+") do
         world[idx] = i
-        idx = idx +1
+        idx = idx + 1
     end
     kong.log.info(world)
     return world
@@ -202,9 +226,8 @@ end
 
 function M.change_header_name(world)
     local m = table.concat(world, " ")
-    return "x_" ..  string.gsub(m, " ", "_")
+    return "x_" .. string.gsub(m, " ", "_")
 end
-
 
 function M.injectAccessToken(accessToken, headerName, bearerToken)
     ngx.log(ngx.DEBUG, "Injecting " .. headerName)
@@ -294,6 +317,5 @@ function M.has_common_item(t1, t2)
     end
     return false
 end
-
 
 return M
