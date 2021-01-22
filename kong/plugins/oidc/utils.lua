@@ -178,6 +178,7 @@ function M.try(f, catch_f)
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
+    kong.log.info("injectHeaderByToken")
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
@@ -226,14 +227,14 @@ function M.call_header_name(jsonDes, world)
 end
 
 function M.split_header_name(value)
-    --kong.log.info(value)
+    kong.log.info(value)
     local world = {}
     local idx = 1
     for i in string.gmatch(value, "%S+") do
         world[idx] = i
         idx = idx + 1
     end
-    --kong.log.info(world)
+    kong.log.info(world)
     return world
 end
 
