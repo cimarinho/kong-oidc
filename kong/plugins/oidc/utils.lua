@@ -135,13 +135,26 @@ local function set_consumer(consumer, credential)
 end
 
 function M.funcao1 (json, x)
-    kong.log.info(json )
-    kong.log.info(x )
-    kong.log.info(json[x] )
-    return json[x]
+    M.try(function()
+        return json[x][x1]
+    end, function(e)
+        kong.log.info("EROOOOOOOOOOOOOOO")
+    end)
 end
-function M.funcao2 (json, x, x1) return json[x][x1] end
-function M.funcao3 (json, x, x1, x3) return json[x][x1][x3] end
+function M.funcao2 (json, x, x1)
+    M.try(function()
+        return json[x][x1]
+    end, function(e)
+        kong.log.info("EROOOOOOOOOOOOOOO")
+    end)
+end
+function M.funcao3 (json, x, x1, x3)
+    M.try(function()
+        return json[x][x1][x3]
+    end, function(e)
+        kong.log.info("EROOOOOOOOOOOOOOO")
+    end)
+end
 function M.funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
 function M.funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
 
@@ -159,14 +172,6 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     local c = header_names
     local size = #c
-
-    M.try(function()
-        kong.log.info(jsonDes["teste"]["teste"])
-    end, function(e)
-        kong.log.info("EROOOOOOOOOOOOOOO")
-    end)
-
-
     local header = {}
     for line = 1, size do
         local world = M.split_header_name(c[line])
