@@ -192,8 +192,11 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     for idx, line in pairs(header) do
         local nameHeader = M.change_header_name({ idx })
-        if nameHeader == nil or nameHeader == '' then
+        kong.log.inf(nameHeader)
+        if nameHeader ~= nil or nameHeader ~= '' then
             kong.service.request.set_header(nameHeader, line)
+            kong.log.inf(nameHeader)
+            kong.log.inf(line)
         end
     end
 end
