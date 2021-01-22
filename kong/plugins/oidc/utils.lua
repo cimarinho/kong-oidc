@@ -156,23 +156,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local header = {}
     for line = 1, size do
         local world = M.split_header_name(c[line])
-        if 1 ==  #world then
-            local a = M.funcao1(jsonDes, world[1])
-            header[c[line]] = a
-        elseif 2 ==  #world then
-            local a = M.funcao2(jsonDes, world[1], world[2])
-            header[c[line]] = a
-        elseif 3 ==  #world then
-            local a = M.funcao3(jsonDes, world[1], world[2], world[3])
-            header[c[line]] = a
-        elseif 4 ==  #world then
-            local a = M.funcao4(jsonDes, world[1], world[2], world[3],world[4])
-            header[c[line]] = a
-        elseif 5 ==  #world then
-            local a = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
-            header[c[line]] = a
-        end
-        kong.log.info(header[c[line]])
+        header[c[line]] = M.call_header_name(world)
     end
     kong.log.info('fim ')
 
@@ -182,6 +166,22 @@ function M.injectHeaderByToken(accessToken, header_names)
     end
 end
 
+function M.call_header_name(world)
+    local value
+    if 1 ==  #world then
+        value[c[line]] = M.funcao1(jsonDes, world[1])
+    elseif 2 ==  #world then
+        value[c[line]] = M.funcao2(jsonDes, world[1], world[2])
+    elseif 3 ==  #world then
+        value[c[line]] = M.funcao3(jsonDes, world[1], world[2], world[3])
+    elseif 4 ==  #world then
+        value[c[line]] = M.funcao4(jsonDes, world[1], world[2], world[3],world[4])
+    elseif 5 ==  #world then
+        value[c[line]] = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
+    end
+    kong.log.info(header[c[line]])
+    return value
+end
 function M.split_header_name(value)
     kong.log.info(value)
     local world = {}
@@ -193,7 +193,6 @@ function M.split_header_name(value)
     kong.log.info(world)
     return world
 end
-
 
 function M.change_header_name(world)
     local m = table.concat(world, " ")
