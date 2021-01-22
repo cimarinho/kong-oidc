@@ -54,6 +54,8 @@ function handle(oidcConfig)
         local response
         if oidcConfig.bearer_jwks == "yes" then
             response, token  = verify_bearer_jwt(oidcConfig)
+            kong.log.info("introspection_endpoint")
+            kong.log.info(token)
         else
             response = introspect(oidcConfig)
         end
