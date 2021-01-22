@@ -112,9 +112,11 @@ function make_oidc(oidcConfig)
         -- constant for resty.oidc library
         unauth_action = "deny"
     end
+    kong.log.info("authenticate")
     local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action)
-
+    kong.log.info("authenticate")
     if err then
+        kong.log.info('err  ', err)
         if err == 'unauthorized request' then
             utils.exit(ngx.HTTP_UNAUTHORIZED, err, ngx.HTTP_UNAUTHORIZED)
         else
@@ -125,6 +127,7 @@ function make_oidc(oidcConfig)
             utils.exit(ngx.HTTP_INTERNAL_SERVER_ERROR, err, ngx.HTTP_INTERNAL_SERVER_ERROR)
         end
     end
+    kong.log.info('res  ', res)
     return res
 end
 
