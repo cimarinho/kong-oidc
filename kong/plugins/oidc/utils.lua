@@ -158,21 +158,26 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     --kong.log.info(jsonDes)
     local size = #header_names
-    local header = {}
-    for line = 1, size do
-        local world = M.split_header_name(header_names[line])
-        header[header_names[line]] = M.call_header_name(jsonDes, world)
-    end
 
-    for idx, line in pairs(header) do
-        local nameHeader = M.change_header_name({ idx })
-        if nameHeader ~= nil or nameHeader ~= '' then
-            kong.service.request.set_header(nameHeader, line)
+    if size > 0 then
+        kong.log.info('size > 0 ', size)
+        local header = {}
+        for line = 1, size do
+            local world = M.splitHeaderName(header_names[line])
+            header[header_names[line]] = M.callHeaderName(jsonDes, world)
+        end
+
+        for idx, line in pairs(header) do
+            local nameHeader = M.changeHeaderName({ idx })
+            if nameHeader ~= nil or nameHeader ~= '' then
+                kong.service.request.set_header(nameHeader, line)
+            end
         end
     end
+
 end
 
-function M.call_header_name(jsonDes, world)
+function M.callHeaderName(jsonDes, world)
     local value
     if 1 == #world then
         value = M.functionOneParam(jsonDes, world[1])
@@ -188,7 +193,7 @@ function M.call_header_name(jsonDes, world)
     return value
 end
 
-function M.split_header_name(value)
+function M.splitHeaderName(value)
     local world = {}
     local idx = 1
     for i in string.gmatch(value, "([^.]+)") do
@@ -198,7 +203,7 @@ function M.split_header_name(value)
     return world
 end
 
-function M.change_header_name(world)
+function M.changeHeaderName(world)
     local m = table.concat(world, " ")
     return "x_" .. string.gsub(m, " ", "_")
 end
