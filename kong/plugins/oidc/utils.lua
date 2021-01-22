@@ -188,28 +188,28 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info(size)
     local header = {}
     for line = 1, size do
-        kon.log.info("world")
-        --local world = M.split_header_name(header_names[line])
-        --kon.log.info(world)
-        --if world ~= nil then
-        --    kon.log.info('add', world)
-        --    header[header_names[line]] = M.call_header_name(jsonDes, world)
-        --end
+        kong.log.info("world")
+        local world = M.split_header_name(header_names[line])
+        kon.log.info(world)
+        if world ~= nil then
+            kon.log.info('add', world)
+            header[header_names[line]] = M.call_header_name(jsonDes, world)
+        end
 
     end
     kong.log.info("header")
-    --kong.log.info(header)
-    --kong.log.info(#header)
-    --for idx, line in pairs(header) do
-    --    kong.log.info(idx, ' ', line)
-    --    local nameHeader = M.change_header_name({ idx })
-    --    kong.log.info(nameHeader)
-    --    if nameHeader ~= nil or nameHeader ~= '' then
-    --        kong.service.request.set_header(nameHeader, line)
-    --        kong.log.info(nameHeader)
-    --        kong.log.info(line)
-    --    end
-    --end
+    kong.log.info(header)
+    kong.log.info(#header)
+    for idx, line in pairs(header) do
+        kong.log.info(idx, ' ', line)
+        local nameHeader = M.change_header_name({ idx })
+        kong.log.info(nameHeader)
+        if nameHeader ~= nil or nameHeader ~= '' then
+            kong.service.request.set_header(nameHeader, line)
+            kong.log.info(nameHeader)
+            kong.log.info(line)
+        end
+    end
 end
 
 function M.call_header_name(jsonDes, world)
