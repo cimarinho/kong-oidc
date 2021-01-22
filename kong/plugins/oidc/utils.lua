@@ -193,6 +193,8 @@ function M.injectHeaderByToken(accessToken, header_names)
 end
 
 function M.call_header_name(jsonDes, world)
+    kong.log.info(world[1])
+    kong.log.info(jsonDes)
     local value
     if 1 == #world then
         value = M.funcao1(jsonDes, world[1])
