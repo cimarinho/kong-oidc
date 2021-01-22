@@ -219,7 +219,7 @@ function M.split_header_name(value)
     kong.log.info(value)
     local world = {}
     local idx = 1
-    for i in string.gmatch(value, "%S+") do
+    for i in string.gmatch(value, "([^.]+)") do
         world[idx] = i
         idx = idx + 1
     end
@@ -228,6 +228,7 @@ function M.split_header_name(value)
 end
 
 function M.change_header_name(world)
+    kong.log.info(world)
     local m = table.concat(world, " ")
     return "x_" .. string.gsub(m, " ", "_")
 end

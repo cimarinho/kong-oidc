@@ -13,17 +13,58 @@ local tablew = {
     },
     idade = 20,
 }
-Lib()
-print(funcao1(tablew, "nome"))
---
---
-function Lib()
-    function funcao1 (json, x) return json[x] end
-    function funcao2 (json, x, x1) return json[x][x1] end
-    function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
-    function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
-    return self
+function split_header_name(value)
+    --print(value)
+    local world = {}
+    local idx = 1
+    for i in string.gmatch(value, "([^.]+)") do
+        world[idx] = i
+        idx = idx + 1
+    end
+    --print(world)
+    return world
 end
+
+local header_names = { "payload.preferred.username" }
+local size = #header_names
+for line = 1, size do
+    --kong.log.info("world")
+    local world = split_header_name(header_names[line])
+    for idx, line in ipairs(world) do
+        print(line)
+    end
+    break;
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--Lib()
+--print(funcao1(tablew, "nome"))
+----
+----
+--function Lib()
+--    function funcao1 (json, x) return json[x] end
+--    function funcao2 (json, x, x1) return json[x][x1] end
+--    function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
+--    function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
+--    return self
+--end
 
 --Lib()
 --local c = { "sobreNome teste", "nome", "idade", "sobreNome teste2 value" }
