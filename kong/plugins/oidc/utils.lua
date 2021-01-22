@@ -145,6 +145,13 @@ function M.funcao3 (json, x, x1, x3) return json[x][x1][x3] end
 function M.funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
 function M.funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
 
+function M.try(f, catch_f)
+    local status, exception = pcall(f)
+    if not status then
+        catch_f(exception)
+    end
+end
+
 function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
@@ -153,7 +160,12 @@ function M.injectHeaderByToken(accessToken, header_names)
     local c = header_names
     local size = #c
 
-    kong.log.info(jsonDes["teste"]["teste"])
+    M.try(function()
+        kong.log.info(jsonDes["teste"]["teste"])
+    end, function(e)
+        kong.log.info("EROOOOOOOOOOOOOOO")
+    end)
+
 
     local header = {}
     for line = 1, size do
