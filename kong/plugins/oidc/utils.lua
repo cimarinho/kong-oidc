@@ -170,13 +170,13 @@ function M.injectHeaderByToken(accessToken, header_names)
             local a = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
             header[c[line]] = a
         end
-        print(header[c[line]])
+        kong.log.info(header[c[line]])
     end
-    print('fim ')
+    kong.log.info('fim ')
 
     for idx, line in pairs(header) do
         --change_header_name({idx})
-        print(M.change_header_name({idx}), '==', line)
+        kong.log.info(M.change_header_name({idx}), '==', line)
 
     end
 
@@ -185,12 +185,14 @@ end
 
 
 function M.split_header_name(value)
+    kong.log.info(value)
     local world = {}
     local idx = 1
     for  i in string.gmatch(value, "%S+") do
         world[idx] = i
         idx = idx +1
     end
+    kong.log.info(world)
     return world
 end
 
