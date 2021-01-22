@@ -160,7 +160,7 @@ function M.funcao5 (json, x, x1, x2, x3, x4)
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
-    kong.log.info(accessToken)
+    --kong.log.info(accessToken)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
