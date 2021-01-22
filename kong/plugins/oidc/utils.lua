@@ -168,7 +168,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     --kong.log.info(jsonDes)
 
-    --kong.log.info(jsonDes["payload"]["preferred_username"])
+    kong.log.info(jsonDes["payload"]["resource_access"]["account"]["roles"][1])
     --kong.log.info(jsonDes["header"]["kid"])
     local size = #header_names
     --kong.log.info(size)
