@@ -190,9 +190,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     for line = 1, size do
         kong.log.info("world")
         local world = M.split_header_name(header_names[line])
-        kon.log.info(world)
+        kong.log.info(world)
         if world ~= nil then
-            kon.log.info('add', world)
+            kong.log.info('add', world)
             header[header_names[line]] = M.call_header_name(jsonDes, world)
         end
 
