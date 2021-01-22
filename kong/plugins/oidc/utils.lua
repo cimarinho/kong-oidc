@@ -149,10 +149,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
-  --//  kong.log.info(json)
     local jsonDes = cjson.decode(json)
- --//   kong.log.info(jsonDes["payload"]["realm_access"]["roles"][1])
-
     local c = header_names
     local size = #c
 
@@ -180,14 +177,10 @@ function M.injectHeaderByToken(accessToken, header_names)
     kong.log.info('fim ')
 
     for idx, line in pairs(header) do
-        --change_header_name({idx})
         kong.log.info(M.change_header_name({idx}), '==', line)
-
+        kong.service.request.set_header(M.change_header_name({idx}), line)
     end
-
 end
-
-
 
 function M.split_header_name(value)
     kong.log.info(value)
@@ -261,8 +254,6 @@ function M.injectHeaders(header_names, header_claims, sources)
             end
         end
     end
-
-    kong.service.request.set_header("teste", "teste123")
 end
 
 function M.has_bearer_access_token()
