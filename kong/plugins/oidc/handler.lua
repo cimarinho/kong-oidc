@@ -74,6 +74,7 @@ function handle(oidcConfig)
     end
 
     if response == nil then
+        kong.log.info("response == nil")
         response = make_oidc(oidcConfig)
         if response then
             if response.user or response.id_token then
@@ -105,6 +106,7 @@ end
 
 function make_oidc(oidcConfig)
     ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested path: " .. ngx.var.request_uri)
+    kong.log.info("rmake_oidc")
     local unauth_action = oidcConfig.unauth_action
     if unauth_action ~= "auth" then
         -- constant for resty.oidc library
