@@ -194,7 +194,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
             kong.log.info('add', world)
             header[header_names[line]] = M.call_header_name(jsonDes, world)
-
+        kong.log.info(header[header_names[line]])
     end
     kong.log.info("header")
     kong.log.info(header)
