@@ -168,7 +168,7 @@ function M.injectHeaderByToken(accessToken, header_names)
         elseif 4 ==  #world then
             local a = M.funcao4(jsonDes, world[1], world[2], world[3],world[4])
             header[c[line]] = a
-        elseif 4 ==  #world then
+        elseif 5 ==  #world then
             local a = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
             header[c[line]] = a
         end
