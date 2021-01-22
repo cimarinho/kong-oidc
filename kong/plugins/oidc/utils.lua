@@ -187,6 +187,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local size = #header_names
     local header = {}
     for line = 1, size do
+        kon.log.info("world")
         local world = M.split_header_name(header_names[line])
         kon.log.info(world)
         if world ~= nil then
