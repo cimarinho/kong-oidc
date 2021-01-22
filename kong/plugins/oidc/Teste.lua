@@ -13,6 +13,10 @@ local tablew = {
     },
     idade = 20,
 }
+Lib()
+print(funcao1(tablew, "nome"))
+--
+--
 function Lib()
     function funcao1 (json, x) return json[x] end
     function funcao2 (json, x, x1) return json[x][x1] end
@@ -21,18 +25,18 @@ function Lib()
     return self
 end
 
-Lib()
-local c = { "sobreNome teste", "nome", "idade", "sobreNome teste2 value" }
-local size = #c
-function split_header_name(value)
-    local world = {}
-    local idx = 1
-    for  i in string.gmatch(value, "%S+") do
-        world[idx] = i
-        idx = idx +1
-    end
-    return world
-end
+--Lib()
+--local c = { "sobreNome teste", "nome", "idade", "sobreNome teste2 value" }
+--local size = #c
+--function split_header_name(value)
+--    local world = {}
+--    local idx = 1
+--    for  i in string.gmatch(value, "%S+") do
+--        world[idx] = i
+--        idx = idx +1
+--    end
+--    return world
+--end
 
 --function call_header_name(world)
 --    local value
@@ -49,31 +53,31 @@ end
 --    return value
 --end
 
-function change_header_name(world)
-    local m = table.concat(world, " ")
-    return "x_" ..  string.gsub(m, " ", "_")
-end
-
-local header = {}
-for line = 1, size do
-    local world = split_header_name(c[line])
-    if 1 ==  #world then
-        local a = funcao1(tablew, world[1])
-        header[c[line]] = a
-    elseif 2 ==  #world then
-        local a = funcao2(tablew, world[1], world[2])
-        header[c[line]] = a
-    elseif 3 ==  #world then
-        local a = funcao3(tablew, world[1], world[2], world[3])
-        header[c[line]] = a
-    end
-
-end
-for idx, line in pairs(header) do
-    --change_header_name({idx})
-    print(change_header_name({idx}), '==', line)
-
-end
+--function change_header_name(world)
+--    local m = table.concat(world, " ")
+--    return "x_" ..  string.gsub(m, " ", "_")
+--end
+--
+--local header = {}
+--for line = 1, size do
+--    local world = split_header_name(c[line])
+--    if 1 ==  #world then
+--        local a = funcao1(tablew, world[1])
+--        header[c[line]] = a
+--    elseif 2 ==  #world then
+--        local a = funcao2(tablew, world[1], world[2])
+--        header[c[line]] = a
+--    elseif 3 ==  #world then
+--        local a = funcao3(tablew, world[1], world[2], world[3])
+--        header[c[line]] = a
+--    end
+--
+--end
+--for idx, line in pairs(header) do
+--    --change_header_name({idx})
+--    print(change_header_name({idx}), '==', line)
+--
+--end
 
 --local a = funcao(tablew, "nome")
 --print(a)
