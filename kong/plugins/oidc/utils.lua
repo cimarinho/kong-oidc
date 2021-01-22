@@ -134,7 +134,12 @@ local function set_consumer(consumer, credential)
     end
 end
 
-function M.funcao1 (json, x) return json[x] end
+function M.funcao1 (json, x)
+    kong.log.info(json )
+    kong.log.info(x )
+    kong.log.info(json[x] )
+    return json[x]
+end
 function M.funcao2 (json, x, x1) return json[x][x1] end
 function M.funcao3 (json, x, x1, x3) return json[x][x1][x3] end
 function M.funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
