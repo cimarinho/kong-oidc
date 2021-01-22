@@ -74,7 +74,7 @@ function handle(oidcConfig)
     end
 
     if response == nil then
-        kong.log.info("response == nil")
+        --kong.log.info("response == nil")
         response = make_oidc(oidcConfig)
         if response then
             if response.user or response.id_token then
@@ -106,17 +106,15 @@ end
 
 function make_oidc(oidcConfig)
     ngx.log(ngx.DEBUG, "OidcHandler calling authenticate, requested path: " .. ngx.var.request_uri)
-    kong.log.info("rmake_oidc")
+    --kong.log.info("rmake_oidc")
     local unauth_action = oidcConfig.unauth_action
     if unauth_action ~= "auth" then
         -- constant for resty.oidc library
         unauth_action = "deny"
     end
-    kong.log.info('authenticate', unauth_action, ' uri ', ngx.var.request_uri )
+    --kong.log.info('authenticate', unauth_action, ' uri ', ngx.var.request_uri )
     local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action)
-    kong.log.info("authenticate")
     if err then
-        kong.log.info('err  ', err)
         if err == 'unauthorized request' then
             utils.exit(ngx.HTTP_UNAUTHORIZED, err, ngx.HTTP_UNAUTHORIZED)
         else
@@ -127,7 +125,6 @@ function make_oidc(oidcConfig)
             utils.exit(ngx.HTTP_INTERNAL_SERVER_ERROR, err, ngx.HTTP_INTERNAL_SERVER_ERROR)
         end
     end
-    kong.log.info('res  ', res)
     return res
 end
 
