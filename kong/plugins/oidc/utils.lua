@@ -167,6 +167,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 end
 
 function M.call_header_name(jsonDes, world)
+    kong.log.info(world[1])
     local value
     if 1 ==  #world then
         value = M.funcao1(jsonDes, world[1])
@@ -179,7 +180,6 @@ function M.call_header_name(jsonDes, world)
     elseif 5 ==  #world then
         value = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
     end
-    kong.log.info(header[c[line]])
     return value
 end
 
