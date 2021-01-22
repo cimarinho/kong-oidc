@@ -139,6 +139,7 @@ function M.funcao1 (json, x)
         return json[x][x1]
     end, function(e)
         kong.log.debug('erro', 'chave', x)
+        return nil
     end)
 end
 function M.funcao2 (json, x, x1)
@@ -146,6 +147,7 @@ function M.funcao2 (json, x, x1)
         return json[x][x1]
     end, function(e)
         kong.log.debug('erro', 'chave', x, x1)
+        return nil
     end)
 end
 function M.funcao3 (json, x, x1, x2)
@@ -153,6 +155,7 @@ function M.funcao3 (json, x, x1, x2)
         return json[x][x1][x2]
     end, function(e)
         kong.log.debug('erro', 'chave', x, x1, x2)
+        return nil
     end)
 end
 function M.funcao4 (json, x, x1, x2, x3)
@@ -160,6 +163,7 @@ function M.funcao4 (json, x, x1, x2, x3)
         return json[x][x1][x2][x3]
     end, function(e)
         kong.log.debug('erro', 'chave', x, x1, x2, x3)
+        return nil
     end)
 end
 function M.funcao5 (json, x, x1, x2, x3, x4)
@@ -167,6 +171,7 @@ function M.funcao5 (json, x, x1, x2, x3, x4)
         return json[x][x1][x2][x3][x4]
     end, function(e)
         kong.log.debug('erro', 'chave', x, x1, x2, x3,x4)
+        return nil
     end)
 end
 
@@ -187,7 +192,12 @@ function M.injectHeaderByToken(accessToken, header_names)
     local header = {}
     for line = 1, size do
         local world = M.split_header_name(header_names[line])
-        header[header_names[line]] = M.call_header_name(jsonDes, world)
+        kon.log.info(world)
+        if world ~= nil then
+            kon.log.info('add', world)
+            header[header_names[line]] = M.call_header_name(jsonDes, world)
+        end
+
     end
     kong.log.info("header")
     kong.log.info(header)
