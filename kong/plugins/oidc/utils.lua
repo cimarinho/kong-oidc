@@ -134,28 +134,19 @@ local function set_consumer(consumer, credential)
     end
 end
 
-function M.funcao1 (json, x)
-    print( json[x])
+function M.functionOneParam (json, x)
     return json[x]
 end
-function M.funcao2 (json, x, x1)
-    print( json[x][x1])
+function M.functionTwoParam (json, x, x1)
     return json[x][x1]
 end
-function M.funcao3 (json, x, x1, x2)
-    print( x)
-    print( x1)
-    print( x2)
-    print( json)
-    print( json[x][x1][x2])
+function M.functionThreeParam (json, x, x1, x2)
     return json[x][x1][x2]
 end
-function M.funcao4 (json, x, x1, x2, x3)
-    print( json[x][x1][x2][x3])
+function M.functionFourParam (json, x, x1, x2, x3)
     return json[x][x1][x2][x3]
 end
-function M.funcao5 (json, x, x1, x2, x3, x4)
-    print( json[x][x1][x2][x3][x4])
+function M.functionFiveParam (json, x, x1, x2, x3, x4)
     return json[x][x1][x2][x3][x4]
 end
 
@@ -163,9 +154,9 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
-    kong.log.info(json)
+    --kong.log.info(json)
     local jsonDes = cjson.decode(json)
-    kong.log.info(jsonDes)
+    --kong.log.info(jsonDes)
     local size = #header_names
     local header = {}
     for line = 1, size do
@@ -184,17 +175,16 @@ end
 function M.call_header_name(jsonDes, world)
     local value
     if 1 == #world then
-        value = M.funcao1(jsonDes, world[1])
+        value = M.functionOneParam(jsonDes, world[1])
     elseif 2 == #world then
-        value = M.funcao2(jsonDes, world[1], world[2])
+        value = M.functionTwoParam(jsonDes, world[1], world[2])
     elseif 3 == #world then
-        value = M.funcao3(jsonDes, world[1], world[2], world[3])
+        value = M.functionThreeParam(jsonDes, world[1], world[2], world[3])
     elseif 4 == #world then
-        value = M.funcao4(jsonDes, world[1], world[2], world[3], world[4])
+        value = M.functionFourParam(jsonDes, world[1], world[2], world[3], world[4])
     elseif 5 == #world then
-        value = M.funcao5(jsonDes, world[1], world[2], world[3], world[4], world[5])
+        value = M.functionFiveParam(jsonDes, world[1], world[2], world[3], world[4], world[5])
     end
-    kong.log.info(value)
     return value
 end
 

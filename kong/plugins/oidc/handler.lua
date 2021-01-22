@@ -36,6 +36,8 @@ function handle(oidcConfig)
     local response
     if oidcConfig.bearer_jwt_auth_enable == "yes" then
         response, token = verify_bearer_jwt(oidcConfig)
+        kong.log.info("bearer_jwt_auth_enable")
+        kong.log.info(token)
         if response then
             utils.setCredentials(response)
             utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
@@ -80,6 +82,7 @@ function handle(oidcConfig)
                 utils.injectGroups(response.id_token, oidcConfig.groups_claim)
             end
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response.user, response.id_token })
+
             if (not oidcConfig.disable_userinfo_header
                     and response.user) then
                 utils.injectUser(response.user, oidcConfig.userinfo_header_name)
