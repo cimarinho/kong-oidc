@@ -160,29 +160,29 @@ function M.funcao5 (json, x, x1, x2, x3, x4)
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
-    kong.log.info(accessToken)
+    --kong.log.info(accessToken)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
-    kong.log.info(json)
+    --kong.log.info(json)
     local jsonDes = cjson.decode(json)
-    kong.log.info(jsonDes)
+    --kong.log.info(jsonDes)
 
-    kong.log.info(jsonDes["payload"]["preferred_username"])
-    kong.log.info(jsonDes["header"]["kid"])
+    --kong.log.info(jsonDes["payload"]["preferred_username"])
+    --kong.log.info(jsonDes["header"]["kid"])
     local size = #header_names
-    kong.log.info(size)
+    --kong.log.info(size)
     local header = {}
     for line = 1, size do
-        kong.log.info("world")
+        --kong.log.info("world")
         local world = M.split_header_name(header_names[line])
-        kong.log.info(world)
-        kong.log.info('add', world)
+        --kong.log.info(world)
+        --kong.log.info('add', world)
         header[header_names[line]] = M.call_header_name(jsonDes, world)
-        kong.log.info(header[header_names[line]])
+        --kong.log.info(header[header_names[line]])
     end
-    kong.log.info("header")
-    kong.log.info(header)
+    --kong.log.info("header")
+    --kong.log.info(header)
 
     for idx, line in pairs(header) do
         kong.log.info(idx, ' ', line)
