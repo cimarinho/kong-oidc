@@ -4,18 +4,24 @@
 --- DateTime: 21/01/2021 18:00
 ---
 
-local header = {"teste value junta"}
+local s = ""
 
-
-for idx, line in pairs(header) do
-    local value = idx
+if  s == nil or s == '' then
+    print("S")
 end
 
-local t = { "teste value junta" }
-local m = table.concat(t, " ")
-local a = "x_" ..  string.gsub(m, " ", "_") -- "concatenate"
-
-print(a)
+--local header = {"teste value junta"}
+--
+--
+--for idx, line in pairs(header) do
+--    local value = idx
+--end
+--
+--local t = { "teste value junta" }
+--local m = table.concat(t, " ")
+--local a = "x_" ..  string.gsub(m, " ", "_") -- "concatenate"
+--
+--print(a)
 
 
 

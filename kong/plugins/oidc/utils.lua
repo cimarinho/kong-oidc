@@ -162,7 +162,11 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     for idx, line in pairs(header) do
         kong.log.info(M.change_header_name({idx}), '==', line)
-        kong.service.request.set_header(M.change_header_name({idx}), line)
+        local nameHeader = M.change_header_name({idx})
+        kong.log.info(nameHeader);
+        if nameHeader == nil or nameHeader == '' then
+            kong.service.request.set_header(h, line)
+        end
     end
 end
 
@@ -180,6 +184,7 @@ function M.call_header_name(jsonDes, world)
     elseif 5 ==  #world then
         value = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
     end
+    kong.log.info(value)
     return value
 end
 
