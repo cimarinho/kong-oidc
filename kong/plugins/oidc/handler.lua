@@ -36,7 +36,7 @@ function handle(oidcConfig)
     local response
     kong.log.info("handle")
     kong.log.info(oidcConfig.bearer_jwt_auth_enable)
-    if oidcConfig.bearer_jwt_auth_enable == "yes" then
+    if oidcConfig.bearer_jwt_auth_enable then
         response, token = verify_bearer_jwt(oidcConfig)
         kong.log.info("bearer_jwt_auth_enable")
         kong.log.info(token)
