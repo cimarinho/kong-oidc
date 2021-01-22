@@ -185,6 +185,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
 
     local size = #header_names
+    kong.log.info(size)
     local header = {}
     for line = 1, size do
         kon.log.info("world")
