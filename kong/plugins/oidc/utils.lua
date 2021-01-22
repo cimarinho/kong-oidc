@@ -180,8 +180,6 @@ function M.injectHeaderByToken(accessToken, header_names)
 end
 
 function M.call_header_name(jsonDes, world)
-    kong.log.info(world[1])
-    kong.log.info(jsonDes)
     local value
     if 1 == #world then
         value = M.funcao1(jsonDes, world[1])
@@ -193,27 +191,22 @@ function M.call_header_name(jsonDes, world)
         value = M.funcao4(jsonDes, world[1], world[2], world[3], world[4])
     elseif 5 == #world then
         value = M.funcao5(jsonDes, world[1], world[2], world[3], world[4], world[5])
-    else
-        kong.log.info('else' ,#world)
     end
     kong.log.info(value)
     return value
 end
 
 function M.split_header_name(value)
-    kong.log.info(value)
     local world = {}
     local idx = 1
     for i in string.gmatch(value, "([^.]+)") do
         world[idx] = i
         idx = idx + 1
     end
-    kong.log.info(world)
     return world
 end
 
 function M.change_header_name(world)
-    kong.log.info(world)
     local m = table.concat(world, " ")
     return "x_" .. string.gsub(m, " ", "_")
 end
