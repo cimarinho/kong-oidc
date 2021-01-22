@@ -189,7 +189,8 @@ function M.injectHeaderByToken(accessToken, header_names)
         local world = M.split_header_name(header_names[line])
         header[header_names[line]] = M.call_header_name(jsonDes, world)
     end
-
+    kong.log.info("header")
+    kong.log.info(header)
     for idx, line in pairs(header) do
         local nameHeader = M.change_header_name({ idx })
         kong.log.info(nameHeader)
