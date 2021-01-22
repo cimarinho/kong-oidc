@@ -153,6 +153,8 @@ function M.injectHeaderByToken(accessToken, header_names)
     local c = header_names
     local size = #c
 
+    kong.log.info(jsonDes["teste"]["teste"])
+
     local header = {}
     for line = 1, size do
         local world = M.split_header_name(c[line])
