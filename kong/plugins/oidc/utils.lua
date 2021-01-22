@@ -160,7 +160,6 @@ function M.injectHeaderByToken(accessToken, header_names)
     local size = #header_names
 
     if size > 0 then
-        kong.log.info('size > 0 ', size)
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(header_names[line])
@@ -174,7 +173,6 @@ function M.injectHeaderByToken(accessToken, header_names)
             end
         end
     end
-    kong.log.info('size = 0 ', size)
 
 end
 
