@@ -135,39 +135,19 @@ local function set_consumer(consumer, credential)
 end
 
 function M.funcao1 (json, x)
-    M.try(function()
-        return json[x][x1]
-    end, function(e)
-        kong.log.debug('erro', 'chave', x)
-    end)
+    return json[x][x1]
 end
 function M.funcao2 (json, x, x1)
-    M.try(function()
-        return json[x][x1]
-    end, function(e)
-        kong.log.debug('erro', 'chave', x, x1)
-    end)
+    return json[x][x1]
 end
 function M.funcao3 (json, x, x1, x2)
-    M.try(function()
-        return json[x][x1][x2]
-    end, function(e)
-        kong.log.debug('erro', 'chave', x, x1, x2)
-    end)
+    return json[x][x1][x2]
 end
 function M.funcao4 (json, x, x1, x2, x3)
-    M.try(function()
-        return json[x][x1][x2][x3]
-    end, function(e)
-        kong.log.debug('erro', 'chave', x, x1, x2, x3)
-    end)
+    return json[x][x1][x2][x3]
 end
 function M.funcao5 (json, x, x1, x2, x3, x4)
-    M.try(function()
-        return json[x][x1][x2][x3][x4]
-    end, function(e)
-        kong.log.debug('erro', 'chave', x, x1, x2, x3,x4)
-    end)
+    return json[x][x1][x2][x3][x4]
 end
 
 function M.try(f, catch_f)
