@@ -173,8 +173,7 @@ function M.injectHeaderByToken(accessToken, header_names)
 
     end
     print('fim ')
-    print(header)
-    print(#header)
+
     for idx, line in pairs(header) do
         --change_header_name({idx})
         print(M.change_header_name({idx}), '==', line)
