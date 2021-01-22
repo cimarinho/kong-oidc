@@ -148,7 +148,7 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     kong.log.info(jsonDes["payload"]["realm_access"]["roles"][1])
 
-    local c = headers_jwks
+    local c = header_names
     local size = #c
 
     local header = {}
