@@ -25,7 +25,7 @@ function split_header_name(value)
     return world
 end
 
-local header_names = { "payload.preferred.username" }
+local header_names = { "payload.resource_access.account.roles.1" }
 local size = #header_names
 for line = 1, size do
     --kong.log.info("world")
