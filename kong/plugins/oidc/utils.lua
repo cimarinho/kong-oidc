@@ -142,20 +142,57 @@ function M.injectHeaderByToken(accessToken, header_names)
     local jsonDes = cjson.decode(json)
     kong.log.info(jsonDes["payload"]["realm_access"]["roles"][1])
 
-    local ids = {}
-    for idx, ele in pairs(jsonDes) do
-        ids[idx] = ele["roles"]
+    M.Lib()
+    local c = headers_jwks
+    local size = #c
+
+    local header = {}
+    for line = 1, size do
+        local world = M.split_header_name(c[line])
+        if 1 ==  #world then
+            local a = funcao1(jsonDes, world[1])
+            header[c[line]] = a
+        elseif 2 ==  #world then
+            local a = funcao2(jsonDes, world[1], world[2])
+            header[c[line]] = a
+        elseif 3 ==  #world then
+            local a = funcao3(jsonDes, world[1], world[2], world[3])
+            header[c[line]] = a
+        end
+
     end
+    for idx, line in pairs(header) do
+        --change_header_name({idx})
+        print(M.change_header_name({idx}), '==', line)
 
-    kong.log.info(ids)
-
-    for i, value in ipairs(header_names) do
-        --local payload = jsonDes["payload"][value]
-        kong.log.info(value)
     end
-
 
 end
+
+function M.Lib()
+    function funcao1 (json, x) return json[x] end
+    function funcao2 (json, x, x1) return json[x][x1] end
+    function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
+    function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
+    return self
+end
+
+function M.split_header_name(value)
+    local world = {}
+    local idx = 1
+    for  i in string.gmatch(value, "%S+") do
+        world[idx] = i
+        idx = idx +1
+    end
+    return world
+end
+
+
+function M.change_header_name(world)
+    local m = table.concat(world, " ")
+    return "x_" ..  string.gsub(m, " ", "_")
+end
+
 
 function M.injectAccessToken(accessToken, headerName, bearerToken)
     ngx.log(ngx.DEBUG, "Injecting " .. headerName)
@@ -247,5 +284,6 @@ function M.has_common_item(t1, t2)
     end
     return false
 end
+
 
 return M

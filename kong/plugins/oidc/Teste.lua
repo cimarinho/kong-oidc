@@ -3,9 +3,6 @@
 --- Created by marcelo.
 --- DateTime: 20/01/2021 17:15
 ---
-
-
-
 local tablew = {
     nome = "Marcelo",
     sobreNome = {
@@ -16,23 +13,142 @@ local tablew = {
     },
     idade = 20,
 }
-
-local c = { "sobreNome", "teste2", "value" }
-
-function t (idx, ele)
-    return idx, ele
+function Lib()
+    function funcao1 (json, x) return json[x] end
+    function funcao2 (json, x, x1) return json[x][x1] end
+    function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
+    function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
+    return self
+end
+Lib()
+local c = { "sobreNome teste", "nome", "idade", "sobreNome teste2 value" }
+local size = #c
+function split_header_name(value)
+    local world = {}
+    local idx = 1
+    for  i in string.gmatch(value, "%S+") do
+        world[idx] = i
+        idx = idx +1
+    end
+    return world
 end
 
-local value = {}
-for idx, ele in pairs(tablew) do
-    value[idx] =  t(idx,ele)
+--function call_header_name(world)
+--    local value
+--    if 1 ==  #world then
+--        local a = funcao1(tablew, world[1])
+--        value = a
+--    elseif 2 ==  #world then
+--        local a = funcao2(tablew, world[1], world[2])
+--        value = a
+--    elseif 3 ==  #world then
+--        local a = funcao3(tablew, world[1], world[2], world[3])
+--        value = a
+--    end
+--    return value
+--end
+
+function change_header_name(world)
+    local m = table.concat(world, " ")
+    return "x_" ..  string.gsub(m, " ", "_")
 end
 
+local header = {}
+for line = 1, size do
+    local world = split_header_name(c[line])
+    if 1 ==  #world then
+        local a = funcao1(tablew, world[1])
+        header[c[line]] = a
+    elseif 2 ==  #world then
+        local a = funcao2(tablew, world[1], world[2])
+        header[c[line]] = a
+    elseif 3 ==  #world then
+        local a = funcao3(tablew, world[1], world[2], world[3])
+        header[c[line]] = a
+    end
 
-print("-------------")
-for i, linha in pairs(value) do
-    print(i, linha)
 end
+for idx, line in pairs(header) do
+    --change_header_name({idx})
+    print(change_header_name({idx}), '==', line)
+
+end
+
+--local a = funcao(tablew, "nome")
+--print(a)
+--local b = funcao1(tablew, "sobreNome", "teste")
+--print(b)
+--
+--local c = funcao2(tablew, "sobreNome", "teste2","value")
+--print(c)
+
+
+--f = assert (loadstring ("print 'hello, world'"))
+
+--for idx, line in ipairs(c) do
+--    print(line)
+--end
+
+--function make_func (x)
+--    fx = dostring("return function sobreNome_teste2_value (json) return json.sobreNome.teste2.value end")
+--    return x
+--end
+
+--function make_func (json)
+--    fx = "return function(x) return json.sobreNome.teste2.value end"
+--    return fx
+--end
+----
+--print(make_func(tablew))
+
+
+
+
+--function Lib(json)
+--    function sobreNome_teste2_value (json) return json.sobreNome.teste2.value end
+--    function nome (json) return json.nome end
+--    function idade (json) return json.idade end
+--    function array (json) return json.sobreNome.teste2.arrays end
+--    return self
+--end
+--Lib()
+--print(sobreNome_teste2_value(tablew))
+--print(nome(tablew))
+--print(idade(tablew))
+--print(array(tablew))
+
+--function Lib()
+--    function foo(x, y) return x+y end
+--    function goo(x, y) return x-y end
+--    return self
+--end
+--Lib()
+--print(foo(3, 2))
+
+
+
+
+--
+--function t (idx, ele)
+--   -- print("ele ", ele)
+--    return idx, ele
+--end
+--
+--local value = {}
+--for idx, ele in pairs(tablew) do
+--    if type(ele) == "table" then
+--        for idx2, ele2 in pairs(ele) do
+--            print(t(idx2,ele2))
+--        end
+--    else
+--        print(t(idx,ele))
+--    end
+--
+--
+--print("-------------")
+--for i, linha in pairs(value) do
+--    --print(i, linha)
+--end
 
 
 
