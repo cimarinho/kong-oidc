@@ -191,11 +191,10 @@ function M.injectHeaderByToken(accessToken, header_names)
         kong.log.info("world")
         local world = M.split_header_name(header_names[line])
         kong.log.info(world)
-        if world ~= nil then
+
             kong.log.info('add', world)
             header[header_names[line]] = M.call_header_name(jsonDes, world)
-        end
-        kong.log.info(header[header_names[line]])
+
     end
     kong.log.info("header")
     kong.log.info(header)
