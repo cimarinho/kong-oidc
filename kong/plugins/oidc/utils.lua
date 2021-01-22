@@ -134,11 +134,11 @@ local function set_consumer(consumer, credential)
     end
 end
 
-function funcao1 (json, x) return json[x] end
-function funcao2 (json, x, x1) return json[x][x1] end
-function funcao3 (json, x, x1, x3) return json[x][x1][x3] end
-function funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
-function funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
+function M.funcao1 (json, x) return json[x] end
+function M.funcao2 (json, x, x1) return json[x][x1] end
+function M.funcao3 (json, x, x1, x3) return json[x][x1][x3] end
+function M.funcao4 (json, x, x1, x2, x3) return json[x][x1][x2][x3] end
+function M.funcao5 (json, x, x1, x2, x3,x4) return json[x][x1][x2][x3][x4] end
 
 function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
@@ -155,19 +155,19 @@ function M.injectHeaderByToken(accessToken, header_names)
     for line = 1, size do
         local world = M.split_header_name(c[line])
         if 1 ==  #world then
-            local a = funcao1(jsonDes, world[1])
+            local a = M.funcao1(jsonDes, world[1])
             header[c[line]] = a
         elseif 2 ==  #world then
-            local a = funcao2(jsonDes, world[1], world[2])
+            local a = M.funcao2(jsonDes, world[1], world[2])
             header[c[line]] = a
         elseif 3 ==  #world then
-            local a = funcao3(jsonDes, world[1], world[2], world[3])
+            local a = M.funcao3(jsonDes, world[1], world[2], world[3])
             header[c[line]] = a
         elseif 4 ==  #world then
-            local a = funcao4(jsonDes, world[1], world[2], world[3],world[4])
+            local a = M.funcao4(jsonDes, world[1], world[2], world[3],world[4])
             header[c[line]] = a
         elseif 4 ==  #world then
-            local a = funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
+            local a = M.funcao5(jsonDes, world[1], world[2], world[3],world[4],world[5])
             header[c[line]] = a
         end
 
