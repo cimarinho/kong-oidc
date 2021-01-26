@@ -243,7 +243,10 @@ end
 
 function M.injectHeaders(header_names, header_claims, sources)
     kong.log.info("injectHeaders")
-    kong.log.info(header_names)
+    kong.log.info("header_names")
+    for k, v in pairs(header_names) do
+        kong.log.info(k, "==", v)
+    end
     kong.log.info(header_claims)
     kong.log.info(sources)
 
