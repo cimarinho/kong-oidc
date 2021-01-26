@@ -265,6 +265,9 @@ function M.injectHeaders(header_names, header_claims, sources)
         for j = 1, #sources do
             local source
             source = sources[j]
+            for key, value in pairs(source) do
+                kong.log.info(key, "===", value)
+            end
             kong.log.info("source   ",source)
             if (source and source[claim]) then
                 kong.service.request.set_header(header, source[claim])
