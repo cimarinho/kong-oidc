@@ -248,6 +248,9 @@ function M.injectHeaders(header_names, header_claims, sources)
         kong.log.info(k, "==", v)
     end
     kong.log.info(header_claims)
+    for k, v in pairs(header_claims) do
+        kong.log.info(k, "==", v)
+    end
     kong.log.info(sources)
 
     if #header_names ~= #header_claims then
@@ -262,6 +265,7 @@ function M.injectHeaders(header_names, header_claims, sources)
         for j = 1, #sources do
             local source
             source = sources[j]
+            kong.log.info("source   ",source)
             if (source and source[claim]) then
                 kong.service.request.set_header(header, source[claim])
                 break
