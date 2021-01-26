@@ -242,6 +242,11 @@ function M.injectGroups(user, claim)
 end
 
 function M.injectHeaders(header_names, header_claims, sources)
+    kong.log.info("injectHeaders")
+    kong.log.info(header_names)
+    kong.log.info(header_claims)
+    kong.log.info(sources)
+
     if #header_names ~= #header_claims then
         kong.log.err('Different number of elements provided in header_names and header_claims. Headers will not be added.')
         return
