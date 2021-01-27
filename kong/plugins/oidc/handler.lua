@@ -43,11 +43,7 @@ function handle(oidcConfig)
         if response then
             if not utils.scopeRequired(oidcConfig, { response }) then
                 kong.log.info(' 403 nao autorizado ' )
-                return {
-                    HTTP_UNAUTHORIZED = 403,
-                    MESSAGE = "Não autorizado"
-                }
-
+                utils.exit(ngx.HTTP_UNAUTHORIZED, err, ngx.HTTP_UNAUTHORIZED)
             end
             utils.setCredentials(response)
             utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
