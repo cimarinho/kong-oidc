@@ -242,16 +242,16 @@ function M.injectGroups(user, claim)
 end
 
 function M.injectHeaders(header_names, header_claims, sources)
-    kong.log.info("injectHeaders")
-    kong.log.info("header_names")
-    for k, v in pairs(header_names) do
-        kong.log.info(k, "==", v)
-    end
-    kong.log.info(header_claims)
-    for k, v in pairs(header_claims) do
-        kong.log.info(k, "==", v)
-    end
-    kong.log.info(sources)
+    --kong.log.info("injectHeaders")
+    --kong.log.info("header_names")
+    --for k, v in pairs(header_names) do
+    --    kong.log.info(k, "==", v)
+    --end
+    --kong.log.info(header_claims)
+    --for k, v in pairs(header_claims) do
+    --    kong.log.info(k, "==", v)
+    --end
+    --kong.log.info(sources)
 
     if #header_names ~= #header_claims then
         kong.log.err('Different number of elements provided in header_names and header_claims. Headers will not be added.')
@@ -265,10 +265,10 @@ function M.injectHeaders(header_names, header_claims, sources)
         for j = 1, #sources do
             local source
             source = sources[j]
-            for key, value in pairs(source) do
-                kong.log.info(key, "===", value)
-            end
-            kong.log.info("source   ",source)
+            --for key, value in pairs(source) do
+            --    kong.log.info(key, "===", value)
+            --end
+            --kong.log.info("source   ",source)
             if (source and source[claim]) then
                 kong.service.request.set_header(header, source[claim])
                 break
