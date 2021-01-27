@@ -162,7 +162,7 @@ function M.scopeRequired(oidcConfig, sources)
 end
 
 function M.injectHeaderByToken(accessToken, oidcConfig)
-    local header_names = oidcConfig.header_names
+    local header_names = oidcConfig.headers_jwks
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
