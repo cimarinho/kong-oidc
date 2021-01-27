@@ -46,6 +46,7 @@ end
 
 function M.get_options(config, ngx)
     return {
+        base_payload_name = config.base_payload_name,
         scopes_required = config.scopes_required,
         headers_jwks = config.headers_jwks,
         bearer_jwks = config.bearer_jwks,
@@ -160,7 +161,8 @@ function M.scopeRequired(oidcConfig, sources)
     return true
 end
 
-function M.injectHeaderByToken(accessToken, header_names)
+function M.injectHeaderByToken(accessToken, oidcConfig)
+    local header_names = oidcConfig.header_names
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
     local json = cjson.encode(jwt_obj)
@@ -173,7 +175,7 @@ function M.injectHeaderByToken(accessToken, header_names)
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(header_names[line])
-            header[header_names[line]] = M.callHeaderName(jsonDes, world)
+            header[header_names[line]] = M.callHeaderName(jsonDes, world, oidcConfig)
         end
 
         for idx, line in pairs(header) do
@@ -186,18 +188,23 @@ function M.injectHeaderByToken(accessToken, header_names)
 
 end
 
-function M.callHeaderName(jsonDes, world)
+function M.callHeaderName(jsonDes, world, oidcConfig)
     local value
+    local payload = "payload"
+    if oidcConfig.base_payload_name then
+        payload = oidcConfig.base_payload_name;
+    end
+    kong.log.info('PAYLOAD  ==', payload)
     if 1 == #world then
-        value = jsonDes["payload"][world[1]]
+        value = jsonDes[payload][world[1]]
     elseif 2 == #world then
-        value = jsonDes["payload"][world[1]][world[2]]
+        value = jsonDes[payload][world[1]][world[2]]
     elseif 3 == #world then
-        value = jsonDes["payload"][world[1]][world[2]][world[3]]
+        value = jsonDes[payload][world[1]][world[2]][world[3]]
     elseif 4 == #world then
-        value = jsonDes["payload"][world[1]][world[2]][world[4]]
+        value = jsonDes[payload][world[1]][world[2]][world[4]]
     elseif 5 == #world then
-        value = jsonDes["payload"][world[1]][world[2]][world[3]][world[4]][world[5]]
+        value = jsonDes[payload][world[1]][world[2]][world[3]][world[4]][world[5]]
     end
     return value
 end
