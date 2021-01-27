@@ -150,6 +150,31 @@ function M.functionFiveParam (json, x, x1, x2, x3, x4)
     return json[x][x1][x2][x3][x4]
 end
 
+function M.scopeRequired(oidcConfig, sources)
+    kong.log.info("scopeRequired")
+    local size = #oidcConfig.scopes_required
+
+    if size > 0 then
+        for i = 1, #oidcConfig.header_names do
+            local header, claim
+            header = oidcConfig.header_names[i]
+
+            for j = 1, #sources do
+                local source
+                source = sources[j]
+                for key, value in pairs(source) do
+                    if key == 'scope' then
+                        kong.log.info(key, "===", value)
+                    end
+
+                end
+
+            end
+        end
+    end
+
+end
+
 function M.injectHeaderByToken(accessToken, header_names)
     local jwt = require "resty.jwt"
     local jwt_obj = jwt:load_jwt(accessToken)
