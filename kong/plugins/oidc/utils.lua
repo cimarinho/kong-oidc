@@ -145,7 +145,7 @@ function M.scopeRequired(oidcConfig, sources)
             source = sources[j]
             for key, value in pairs(source) do
                 if key == 'scope' then
-                    kong.log.info(key, "===", value, " == ", oidcConfig.scopes_required)
+                    --kong.log.info(key, "===", value, " == ", oidcConfig.scopes_required)
                     for ite, valueScope in pairs(oidcConfig.scopes_required) do
                         if not string.match(value, valueScope) then
                             --kong.log.info(value, ' diferente ', valueScope)
@@ -190,6 +190,7 @@ end
 
 function M.callHeaderName(jsonDes, world, oidcConfig)
     local value
+    kong.log.info('callHeaderName  ==', oidcConfig.base_payload_name)
     local payload = "payload"
     if oidcConfig.base_payload_name then
         payload = oidcConfig.base_payload_name;
