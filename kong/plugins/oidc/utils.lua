@@ -135,43 +135,27 @@ local function set_consumer(consumer, credential)
     end
 end
 
-function M.functionOneParam (json, x)
-    return json[x]
-end
-function M.functionTwoParam (json, x, x1)
-    return json[x][x1]
-end
-function M.functionThreeParam (json, x, x1, x2)
-    return json[x][x1][x2]
-end
-function M.functionFourParam (json, x, x1, x2, x3)
-    return json[x][x1][x2][x3]
-end
-function M.functionFiveParam (json, x, x1, x2, x3, x4)
-    return json[x][x1][x2][x3][x4]
-end
-
 function M.scopeRequired(oidcConfig, sources)
     kong.log.info("scopeRequired")
     local size = #oidcConfig.scopes_required
     if size > 0 then
-            for j = 1, #sources do
-                local source
-                source = sources[j]
-                for key, value in pairs(source) do
-                    if key == 'scope' then
-                        kong.log.info(key, "===", value, " == ", oidcConfig.scopes_required)
-                        for ite, valueScope in pairs(oidcConfig.scopes_required) do
-                            if not string.match(value, valueScope) then
-                                kong.log.info(value, ' diferente ' ,valueScope )
-                                return false
+        for j = 1, #sources do
+            local source
+            source = sources[j]
+            for key, value in pairs(source) do
+                if key == 'scope' then
+                    kong.log.info(key, "===", value, " == ", oidcConfig.scopes_required)
+                    for ite, valueScope in pairs(oidcConfig.scopes_required) do
+                        if not string.match(value, valueScope) then
+                            kong.log.info(value, ' diferente ', valueScope)
+                            return false
                             --else
                             --    kong.log.info(value, ' == ' , valueScope)
-                            end
                         end
                     end
                 end
             end
+        end
     end
     return true
 end
@@ -205,15 +189,15 @@ end
 function M.callHeaderName(jsonDes, world)
     local value
     if 1 == #world then
-        value = M.functionOneParam(jsonDes, world[1])
+        value = jsonDes["payload"][world[1]]
     elseif 2 == #world then
-        value = M.functionTwoParam(jsonDes, world[1], world[2])
+        value = jsonDes["payload"][world[1]][world[2]]
     elseif 3 == #world then
-        value = M.functionThreeParam(jsonDes, world[1], world[2], world[3])
+        value = jsonDes["payload"][world[1]][world[2]][world[3]]
     elseif 4 == #world then
-        value = M.functionFourParam(jsonDes, world[1], world[2], world[3], world[4])
+        value = jsonDes["payload"][world[1]][world[2]][world[4]]
     elseif 5 == #world then
-        value = M.functionFiveParam(jsonDes, world[1], world[2], world[3], world[4], world[5])
+        value = jsonDes["payload"][world[1]][world[2]][world[3]][world[4]][world[5]]
     end
     return value
 end
