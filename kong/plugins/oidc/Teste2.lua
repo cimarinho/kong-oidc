@@ -10,6 +10,8 @@ if  s == nil or s == '' then
     print("S")
 end
 
+try(=> try(=> error "..."):catch(=> error "CATCH THIS!")):catch(=> print "Gotcha!")
+
 --local header = {"teste value junta"}
 --
 --
