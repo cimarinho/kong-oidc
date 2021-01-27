@@ -46,6 +46,7 @@ end
 
 function M.get_options(config, ngx)
     return {
+        scopes_required = config.scopes_required,
         headers_jwks = config.headers_jwks,
         bearer_jwks = config.bearer_jwks,
         client_id = config.client_id,

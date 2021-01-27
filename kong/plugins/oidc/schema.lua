@@ -1,6 +1,7 @@
 return {
     no_consumer = true,
     fields = {
+        scopes_required = { type = "array", default = {}, required= false },
         headers_jwks = { type = "array", default = {}, required= false },
         bearer_jwks = { type = "string", required = true },
         client_id = { type = "string", required = true },
