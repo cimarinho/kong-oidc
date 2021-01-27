@@ -41,7 +41,9 @@ function handle(oidcConfig)
         --kong.log.info("bearer_jwt_auth_enable")
         --kong.log.info(token)
         if response then
-            utils.scopeRequired(oidcConfig, { response })
+            if utils.scopeRequired(oidcConfig, { response }) then
+                return nill
+            end
             utils.setCredentials(response)
             utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
             utils.injectGroups(response, oidcConfig.groups_claim)

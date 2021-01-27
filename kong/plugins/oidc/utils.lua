@@ -154,7 +154,6 @@ end
 function M.scopeRequired(oidcConfig, sources)
     kong.log.info("scopeRequired")
     local size = #oidcConfig.scopes_required
-
     if size > 0 then
             for j = 1, #sources do
                 local source
@@ -165,18 +164,16 @@ function M.scopeRequired(oidcConfig, sources)
                         for ite, valueScope in pairs(oidcConfig.scopes_required) do
                             if not string.match(value, valueScope) then
                                 kong.log.info(value, ' diferente ' ,valueScope )
-                                return
+                                return false
                             --else
                             --    kong.log.info(value, ' == ' , valueScope)
                             end
                         end
                     end
-
---scope===email order:write profile
-
                 end
             end
     end
+    return true
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
