@@ -42,7 +42,10 @@ function handle(oidcConfig)
         --kong.log.info(token)
         if response then
             if not utils.scopeRequired(oidcConfig, { response }) then
-                return nill
+                kong.log.info('scopeRequired false')
+                return nil
+            else
+                kong.log.info('scopeRequired true')
             end
             utils.setCredentials(response)
             utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
