@@ -195,9 +195,6 @@ function M.callHeaderName(jsonDes, world, oidcConfig)
     if oidcConfig.base_payload_name then
         payload = oidcConfig.base_payload_name;
     end
-    kong.log.info(world[1], ' == PAYLOAD  ==', payload)
-    kong.log.info(jsonDes[payload][world[1]])
-    kong.log.info(jsonDes["payload"][world[1]])
     if 1 == #world then
         value = jsonDes[payload][world[1]]
     elseif 2 == #world then
@@ -209,7 +206,6 @@ function M.callHeaderName(jsonDes, world, oidcConfig)
     elseif 5 == #world then
         value = jsonDes[payload][world[1]][world[2]][world[3]][world[4]][world[5]]
     end
-    kong.log.info('value  ==', value)
     return value
 end
 
