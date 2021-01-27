@@ -43,7 +43,7 @@ function handle(oidcConfig)
         if response then
             if not utils.scopeRequired(oidcConfig, { response }) then
                 kong.log.info(' 403 nao autorizado ' )
-                utils.exit(403, err, 403)
+                utils.exit(403, '', 403)
             end
             utils.setCredentials(response)
             utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
