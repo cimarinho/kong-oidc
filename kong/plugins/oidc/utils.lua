@@ -165,11 +165,10 @@ function M.scopeRequired(oidcConfig, sources)
                         for ite, valueScope in pairs(oidcConfig.scopes_required) do
                             if not string.match(value, valueScope) then
                                 kong.log.info(value, ' diferente ' ,valueScope )
-                            else
-                                kong.log.info(value, ' == ' , valueScope)
+                                return
+                            --else
+                            --    kong.log.info(value, ' == ' , valueScope)
                             end
-
-
                         end
                     end
 
