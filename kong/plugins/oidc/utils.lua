@@ -195,7 +195,8 @@ function M.callHeaderName(jsonDes, world, oidcConfig)
     if oidcConfig.base_payload_name then
         payload = oidcConfig.base_payload_name;
     end
-    kong.log.info('callHeaderName  == ',world[1], ' == ',world[2])
+    kong.log.info('call 1  == ',world[1], ' == ',world[2], jsonDes["payload"]["rrwwrw"])
+    kong.log.info('call 2  == ',world[1], ' == ',world[2], jsonDes["payload"]["rrwwrw"]["ewew"])
     if 1 == #world then
         value = jsonDes[payload][world[1]]
     elseif 2 == #world then
