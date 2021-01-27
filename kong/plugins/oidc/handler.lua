@@ -42,6 +42,7 @@ function handle(oidcConfig)
         --kong.log.info(token)
         if response then
             if not utils.scopeRequired(oidcConfig, { response }) then
+                kong.log.info(' 403 nao autorizado ' )
                 return {
                     HTTP_UNAUTHORIZED = 403,
                     MESSAGE = "Não autorizado"
