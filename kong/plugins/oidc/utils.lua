@@ -161,8 +161,20 @@ function M.scopeRequired(oidcConfig, sources)
                 source = sources[j]
                 for key, value in pairs(source) do
                     if key == 'scope' then
-                        kong.log.info(key, "===", value)
+                        kong.log.info(key, "===", value, " == ", oidcConfig.scopes_required)
+                        for ite in pairs(oidcConfig.scopes_required) do
+                            if string.match(value, ite) then
+                                kong.log.info(value, ' == ' ,ite )
+                            else
+                                kong.log.info(value, ' diferente' , ite)
+                            end
+
+
+                        end
                     end
+
+--scope===email order:write profile
+
                 end
             end
     end
