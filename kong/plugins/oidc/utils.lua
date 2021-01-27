@@ -136,7 +136,7 @@ local function set_consumer(consumer, credential)
 end
 
 function M.scopeRequired(oidcConfig, sources)
-    kong.log.info("scopeRequired")
+    --kong.log.info("scopeRequired")
     local size = #oidcConfig.scopes_required
     if size > 0 then
         for j = 1, #sources do
@@ -147,7 +147,7 @@ function M.scopeRequired(oidcConfig, sources)
                     kong.log.info(key, "===", value, " == ", oidcConfig.scopes_required)
                     for ite, valueScope in pairs(oidcConfig.scopes_required) do
                         if not string.match(value, valueScope) then
-                            kong.log.info(value, ' diferente ', valueScope)
+                            --kong.log.info(value, ' diferente ', valueScope)
                             return false
                             --else
                             --    kong.log.info(value, ' == ' , valueScope)
