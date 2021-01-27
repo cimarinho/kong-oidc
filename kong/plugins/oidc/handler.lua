@@ -42,10 +42,11 @@ function handle(oidcConfig)
         --kong.log.info(token)
         if response then
             if not utils.scopeRequired(oidcConfig, { response }) then
-                kong.log.info('scopeRequired false')
-                return nil
-            else
-                kong.log.info('scopeRequired true')
+                return {
+                    HTTP_UNAUTHORIZED = 403,
+                    MESSAGE = "Não autorizado"
+                }
+
             end
             utils.setCredentials(response)
             utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
