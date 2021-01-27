@@ -190,7 +190,7 @@ end
 
 function M.callHeaderName(jsonDes, world, oidcConfig)
     local value
-    kong.log.info('callHeaderName  ==', oidcConfig.base_payload_name)
+    --kong.log.info('callHeaderName  ==', oidcConfig.base_payload_name)
     local payload = "payload"
     if oidcConfig.base_payload_name then
         payload = oidcConfig.base_payload_name;
