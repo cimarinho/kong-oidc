@@ -156,10 +156,6 @@ function M.scopeRequired(oidcConfig, sources)
     local size = #oidcConfig.scopes_required
 
     if size > 0 then
-        for i = 1, #oidcConfig.header_names do
-            local header, claim
-            header = oidcConfig.header_names[i]
-
             for j = 1, #sources do
                 local source
                 source = sources[j]
@@ -167,13 +163,9 @@ function M.scopeRequired(oidcConfig, sources)
                     if key == 'scope' then
                         kong.log.info(key, "===", value)
                     end
-
                 end
-
             end
-        end
     end
-
 end
 
 function M.injectHeaderByToken(accessToken, header_names)
