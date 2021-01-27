@@ -203,7 +203,7 @@ function M.callHeaderName(jsonDes, world, oidcConfig)
     elseif 3 == #world then
         value = jsonDes[payload][world[1]][world[2]][world[3]]
     elseif 4 == #world then
-        value = jsonDes[payload][world[1]][world[2]][world[4]]
+        value = jsonDes[payload][world[1]][world[2]][world[3]][world[4]]
     elseif 5 == #world then
         value = jsonDes[payload][world[1]][world[2]][world[3]][world[4]][world[5]]
     end

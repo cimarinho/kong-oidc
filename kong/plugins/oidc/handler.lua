@@ -46,7 +46,7 @@ function handle(oidcConfig)
                 utils.exit(403, '', 403)
             end
             utils.setCredentials(response)
-            utils.injectHeaderByToken(token, oidcConfig.headers_jwks)
+            utils.injectHeaderByToken(token, oidcConfig)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
             if not oidcConfig.disable_userinfo_header then
