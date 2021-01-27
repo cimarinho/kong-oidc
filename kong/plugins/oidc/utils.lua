@@ -201,7 +201,14 @@ function M.callHeaderName(jsonDes, world, oidcConfig)
         value = jsonDes[payload][world[1]]
     elseif 2 == #world then
         kong.log.info('elseif 2 ')
-        value = jsonDes[payload][world[1]][world[2]]
+        try {
+            value = jsonDes[payload][world[1]][world[2]]
+            catch{
+                kong.log.info('error elseif 2 ')
+            }
+        }
+
+        
     elseif 3 == #world then
         value = jsonDes[payload][world[1]][world[2]][world[3]]
     elseif 4 == #world then
