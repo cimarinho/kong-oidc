@@ -41,7 +41,7 @@ function handle(oidcConfig)
                 kong.log.info(' 403 nao autorizado ' )
                 utils.exit(403, '', 403)
             end
-            local addHeader = utils.injectHeaderByToken( oidcConfig.headers_jwks, response )
+            local addHeader = utils.injectHeaderByToken( oidcConfig.headers_jwks, { response } )
             utils.addHeader(addHeader)
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
