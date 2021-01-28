@@ -173,7 +173,7 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
             world = M.splitHeaderName(header_names[line])
 
         end
-
+        local lineHeader = 1
         for line = 1, #sources do
             local source
             source = sources[line]
@@ -182,7 +182,8 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
                 for idxHeader, valueHeader in pairs(header_names) do
                     kong.log.info(idxHeader, ' == ', valueHeader)
                     if key == valueHeader then
-                        header[header_names[line]] = value
+                        header[header_names[lineHeader]] = value
+                        lineHeader = lineHeader + 1
                     end
                 end
             end
