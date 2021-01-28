@@ -176,7 +176,7 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
 end
 
 function M.addHeader(headers)
-    kong.log.info(headers)
+    kong.log.info(headers, ' == ',#headers)
     for k, v in pairs(headers) do
         kong.log.info(k, ' == ',v)
         kong.service.request.set_header(k, v)
