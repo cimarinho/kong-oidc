@@ -196,7 +196,7 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
         end
 
     end
-
+end
     function M.splitHeaderName(value)
         local world = {}
         local idx = 1
