@@ -178,15 +178,14 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
             local source
             source = sources[j]
             for key, value in pairs(source) do
-            end
+                kong.log.info(key, ' == ', value)
                 for idxHeader, valueHeader in pairs(header) do
-                    kong.log.info(key ,' == ', valueHeader)
+                    kong.log.info(idxHeader, ' == ', valueHeader)
                     if key == valueHeader then
                         header[header_names[line]] = value
                     end
                 end
             end
-
 
             for idx, line in pairs(header) do
                 local nameHeader = M.changeHeaderName({ idx })
