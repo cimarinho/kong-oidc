@@ -159,7 +159,7 @@ end
 function M.injectHeaderByToken(headers_jwks, jsonDes)
     local headers = {}
     local size = #headers_jwks
-    if size > 0 then
+    if #jsonDes > 0  and size > 0 then
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(headers_jwks[line])
