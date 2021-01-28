@@ -185,7 +185,7 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
             local source
             source = sources[line]
             for key, value in pairs(source) do
-                --kong.log.info(key, ' == ', value)
+                kong.log.info(key, ' == ', value)
                 for idxHeader, valueHeader in pairs(header_names) do
                     --kong.log.info(idxHeader, ' == ', valueHeader)
                     if key == valueHeader then
