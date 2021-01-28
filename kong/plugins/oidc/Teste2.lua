@@ -4,13 +4,10 @@
 --- DateTime: 21/01/2021 18:00
 ---
 
-local s = ""
+local r = dofile("Teste.lua")
 
-if  s == nil or s == '' then
-    print("S")
-end
+print(my_super_function(1,2))
 
-try(=> try(=> error "..."):catch(=> error "CATCH THIS!")):catch(=> print "Gotcha!")
 
 --local header = {"teste value junta"}
 --
