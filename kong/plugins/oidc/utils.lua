@@ -161,7 +161,7 @@ function M.scopeRequired(oidcConfig, sources)
     return true
 end
 
-function M.injectHeaderByToken(accessToken, oidcConfig, response)
+function M.injectHeaderByToken(accessToken, oidcConfig, sources)
     local header_names = oidcConfig.headers_jwks
 
     kong.log.info("injectHeaderByToken")
