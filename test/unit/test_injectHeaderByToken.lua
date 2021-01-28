@@ -1,59 +1,9 @@
 local lu = require('luaunit')
-
-function splitHeaderName(value)
-    local world = {}
-    local idx = 1
-    for i in string.gmatch(value, "([^.]+)") do
-        world[idx] = i
-        idx = idx + 1
-    end
-    return world
-end
-
-function changeHeaderName(world)
-    local m = table.concat(world, " ")
-    return "x_" .. string.gsub(m, " ", "_")
-end
-
-function callHeaderName(jsonDes, world)
-    local value
-    if 1 == #world then
-        value = jsonDes[world[1]]
-    elseif 2 == #world then
-        value = jsonDes[world[1]][world[2]]
-    elseif 3 == #world then
-        value = jsonDes[world[1]][world[2]][world[3]]
-    elseif 4 == #world then
-        value = jsonDes[world[1]][world[2]][world[3]][world[4]]
-    elseif 5 == #world then
-        value = jsonDes[world[1]][world[2]][world[3]][world[4]][world[5]]
-    end
-    return value
-end
-
-function injectHeaderByToken(header_names, jsonDes)
-    local set_header = {}
-    local size = #header_names
-
-    if size > 0 then
-        local header = {}
-        for line = 1, size do
-            local world = splitHeaderName(header_names[line])
-            header[header_names[line]] = callHeaderName(jsonDes, world)
-        end
-
-        for idx, line in pairs(header) do
-            local nameHeader = changeHeaderName({ idx })
-            if nameHeader ~= nil or nameHeader ~= '' then
-                set_header[idx] = line
-            end
-        end
-    end
-    return set_header
-end
+local utils = dofile("/home/marcelo/magalu/kong/plugins/marinho/kong-oidc/kong/plugins/oidc/utils.lua")
 
 TestMyStuff = {} --class
 function TestMyStuff:testWithNumbers()
+
     local response = {
         azp = "client-two",
         iat = 1611841776,
@@ -105,15 +55,15 @@ function TestMyStuff:testWithNumbers()
         }
     }
 
-    --local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
-    --result = injectHeaderByToken(headers_jwks, response)
+    local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
+    result = utils.injectHeaderByToken(headers_jwks, response)
     --
-    --for k, v in pairs(result) do
-    --    print(k, '  ', v)
-    --    --lu.assertTrue(check(headers_jwks, k))
-    --end
+    for k, v in pairs(result) do
+        print(k, ' == ', v)
+        --lu.assertTrue(check(headers_jwks, k))
+    end
 
-    print(changeHeaderName("valor"))
+    --print(changeHeaderName("valor"))
     --lu.assertEquals( result["name"],  "joe joe"  )
     --lu.assertEquals( result["preferred_username"],  "joe"  )
 end

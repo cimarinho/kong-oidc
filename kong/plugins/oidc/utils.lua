@@ -157,21 +157,27 @@ function M.scopeRequired(oidcConfig, sources)
 end
 
 function M.injectHeaderByToken(headers_jwks, jsonDes)
+    local headers = {}
     local size = #headers_jwks
     if size > 0 then
-        for j = 1, #jsonDes do
-            local header = {}
-            for line = 1, size do
-                local world = M.splitHeaderName(headers_jwks[line])
-                header[headers_jwks[line]] = M.callHeaderName(jsonDes[j], world)
-            end
-            for idx, line in pairs(header) do
-                local nameHeader = M.changeHeaderName(idx )
-                if nameHeader ~= nil or nameHeader ~= '' then
-                    kong.service.request.set_header(nameHeader, line)
-                end
+        local header = {}
+        for line = 1, size do
+            local world = M.splitHeaderName(headers_jwks[line])
+            header[headers_jwks[line]] = M.callHeaderName(jsonDes, world)
+        end
+        for idx, line in pairs(header) do
+            local nameHeader = M.changeHeaderName(idx)
+            if nameHeader ~= nil or nameHeader ~= '' then
+                headers[idx] = line
             end
         end
+    end
+    return headers
+end
+
+function M.addHeader(headers)
+    for k, v in ipairs(headers) do
+        kong.service.request.set_header(k, v)
     end
 end
 

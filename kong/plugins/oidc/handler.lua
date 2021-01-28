@@ -34,19 +34,16 @@ end
 
 function handle(oidcConfig)
     local response
-    --kong.log.info("handle")
-    --kong.log.info(oidcConfig.bearer_jwt_auth_enable)
     if oidcConfig.bearer_jwt_auth_enable then
         response, token = verify_bearer_jwt(oidcConfig)
-        --kong.log.info("bearer_jwt_auth_enable")
-        --kong.log.info(token)
         if response then
             if not utils.scopeRequired(oidcConfig, { response }) then
                 kong.log.info(' 403 nao autorizado ' )
                 utils.exit(403, '', 403)
             end
+            local addHeader = utils.injectHeaderByToken( oidcConfig.headers_jwks, response )
+            utils.addHeader(addHeader)
             utils.setCredentials(response)
-            utils.injectHeaderByToken( oidcConfig.headers_jwks, { response })
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
             if not oidcConfig.disable_userinfo_header then
@@ -60,13 +57,11 @@ function handle(oidcConfig)
         local response
         if oidcConfig.bearer_jwks == "yes" then
             response, token  = verify_bearer_jwt(oidcConfig)
-            --kong.log.info("introspection_endpoint")
-            --kong.log.info(token)
         else
             response = introspect(oidcConfig)
         end
         if response then
-            utils.injectHeaderByToken( oidcConfig.headers_jwks, { response })
+            utils.injectHeaderByToken( oidcConfig.headers_jwks,  response )
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })
