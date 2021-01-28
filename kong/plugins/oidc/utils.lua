@@ -163,7 +163,12 @@ end
 
 function M.injectHeaderByToken(accessToken, oidcConfig, sources)
     local header_names = oidcConfig.headers_jwks
-
+    local jwt = require "resty.jwt"
+    local jwt_obj = jwt:load_jwt(accessToken)
+    local json = cjson.encode(jwt_obj)
+    kong.log.info(json)
+    local jsonDes = cjson.decode(json)
+    kong.log.info(jsonDes)
 
     local size = #header_names
 
