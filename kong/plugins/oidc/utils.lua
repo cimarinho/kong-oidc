@@ -161,53 +161,39 @@ function M.scopeRequired(oidcConfig, sources)
     return true
 end
 
-function M.injectHeaderByToken(accessToken, oidcConfig)
+function M.injectHeaderByToken(accessToken, oidcConfig, response)
     local header_names = oidcConfig.headers_jwks
-    local jwt = require "resty.jwt"
-    local jwt_obj = jwt:load_jwt(accessToken)
-    local json = cjson.encode(jwt_obj)
-    --kong.log.info(json)
-    local jsonDes = cjson.decode(json)
-    --kong.log.info(jsonDes)
+
+    kong.log.info("injectHeaderByToken")
     local size = #header_names
 
     if size > 0 then
         local header = {}
-        for line = 1, size do
-            local world = M.splitHeaderName(header_names[line])
-            header[header_names[line]] = M.callHeaderName(jsonDes, world, oidcConfig)
-        end
+        --for line = 1, size do
+        --    local world = M.splitHeaderName(header_names[line])
+        --    header[header_names[line]] = M.callHeaderName(jsonDes, world, oidcConfig)
+        --end
 
-        for idx, line in pairs(header) do
-            local nameHeader = M.changeHeaderName({ idx })
-            if nameHeader ~= nil or nameHeader ~= '' then
-                kong.service.request.set_header(nameHeader, line)
+        for j = 1, #sources do
+            local source
+            source = sources[j]
+            for key, value in pairs(source) do
+                kong.log.info(key, value)
             end
+
         end
+
+
+        --for idx, line in pairs(header) do
+        --    local nameHeader = M.changeHeaderName({ idx })
+        --    if nameHeader ~= nil or nameHeader ~= '' then
+        --        kong.service.request.set_header(nameHeader, line)
+        --    end
+        --end
     end
 
 end
 
-function M.callHeaderName(jsonDes, world, oidcConfig)
-    local value
-    --kong.log.info('callHeaderName  ==', oidcConfig.base_payload_name)
-    local payload = "payload"
-    if oidcConfig.base_payload_name then
-        payload = oidcConfig.base_payload_name;
-    end
-    if 1 == #world then
-        value = jsonDes[payload][world[1]]
-    elseif 2 == #world then
-        if jsonDes[payload][world[1]] ~= nil then
-            value = jsonDes[payload][world[1]][world[2]]
-        end
-    elseif 3 == #world then
-        if jsonDes[payload][world[1]] ~= nil and jsonDes[payload][world[1]][world[2]]then
-            value = jsonDes[payload][world[1]][world[2]][world[3]]
-        end
-    end
-    return value
-end
 
 function M.splitHeaderName(value)
     local world = {}
