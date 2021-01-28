@@ -164,6 +164,10 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
 
     for idx, value in pairs(jsonDes) do
         kong.log.info(idx, '  ==   ', value)
+        for idx2, value2 in pairs(value) do
+            kong.log.info(idx2, '  ==   ', value2)
+        end
+
     end
 
     kong.log.info(size, '  ==   ', jsonDes["name"])
