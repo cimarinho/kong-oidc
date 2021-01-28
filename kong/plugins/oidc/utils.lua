@@ -164,10 +164,11 @@ end
 function M.injectHeaderByToken(accessToken, oidcConfig, sources)
     local header_names = oidcConfig.headers_jwks
 
-    kong.log.info("injectHeaderByToken")
+
     local size = #header_names
 
-    if size > 0 then
+    kong.log.info('injectHeaderByToken', size)
+   -- if size > 0 then
         local header = {}
         --for line = 1, size do
         --    local world = M.splitHeaderName(header_names[line])
@@ -190,7 +191,7 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
         --        kong.service.request.set_header(nameHeader, line)
         --    end
         --end
-    end
+    --end
 
 end
 
