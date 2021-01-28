@@ -163,161 +163,158 @@ end
 
 function M.injectHeaderByToken(accessToken, oidcConfig, sources)
     local header_names = oidcConfig.headers_jwks
-    local jwt = require "resty.jwt"
-    local jwt_obj = jwt:load_jwt(accessToken)
-    local json = cjson.encode(jwt_obj)
-    kong.log.info(json)
-    local jsonDes = cjson.decode(json)
-    kong.log.info(jsonDes)
-
     local size = #header_names
 
     kong.log.info('injectHeaderByToken', size)
-   -- if size > 0 then
+    if size > 0 then
         local header = {}
-        --for line = 1, size do
-        --    local world = M.splitHeaderName(header_names[line])
-        --    header[header_names[line]] = M.callHeaderName(jsonDes, world, oidcConfig)
-        --end
+        local world
+        for line = 1, size do
+            world = M.splitHeaderName(header_names[line])
+
+        end
 
         for j = 1, #sources do
             local source
             source = sources[j]
             for key, value in pairs(source) do
-                kong.log.info(key, value)
+            end
+                for idxHeader, valueHeader in pairs(header) do
+                    kong.log.info(key ,' == ', valueHeader)
+                    if key == valueHeader then
+                        header[header_names[line]] = value
+                    end
+                end
             end
 
+
+            for idx, line in pairs(header) do
+                local nameHeader = M.changeHeaderName({ idx })
+                if nameHeader ~= nil or nameHeader ~= '' then
+                    kong.service.request.set_header(nameHeader, line)
+                end
+            end
         end
 
+    end
 
-        --for idx, line in pairs(header) do
-        --    local nameHeader = M.changeHeaderName({ idx })
-        --    if nameHeader ~= nil or nameHeader ~= '' then
-        --        kong.service.request.set_header(nameHeader, line)
-        --    end
+    function M.splitHeaderName(value)
+        local world = {}
+        local idx = 1
+        for i in string.gmatch(value, "([^.]+)") do
+            world[idx] = i
+            idx = idx + 1
+        end
+        return world
+    end
+
+    function M.changeHeaderName(world)
+        local m = table.concat(world, " ")
+        return "x_" .. string.gsub(m, " ", "_")
+    end
+
+    function M.injectAccessToken(accessToken, headerName, bearerToken)
+        ngx.log(ngx.DEBUG, "Injecting " .. headerName)
+        local token = accessToken
+        if (bearerToken) then
+            token = formatAsBearerToken(token)
+        end
+        ngx.req.set_header(headerName, token)
+    end
+
+    function M.injectIDToken(idToken, headerName)
+        ngx.log(ngx.DEBUG, "Injecting " .. headerName)
+        local tokenStr = cjson.encode(idToken)
+        ngx.req.set_header(headerName, ngx.encode_base64(tokenStr))
+    end
+
+    function M.setCredentials(user)
+        local tmp_user = user
+        tmp_user.id = user.sub
+        tmp_user.username = user.preferred_username
+        set_consumer(nil, tmp_user)
+    end
+
+    function M.injectUser(user, headerName)
+        ngx.log(ngx.DEBUG, "Injecting " .. headerName)
+        local userinfo = cjson.encode(user)
+        ngx.req.set_header(headerName, ngx.encode_base64(userinfo))
+    end
+
+    function M.injectGroups(user, claim)
+        if user[claim] ~= nil then
+            kong.ctx.shared.authenticated_groups = user[claim]
+        end
+    end
+
+    function M.injectHeaders(header_names, header_claims, sources)
+        --kong.log.info("injectHeaders")
+        --kong.log.info("header_names")
+        --for k, v in pairs(header_names) do
+        --    kong.log.info(k, "==", v)
         --end
-    --end
+        --kong.log.info(header_claims)
+        --for k, v in pairs(header_claims) do
+        --    kong.log.info(k, "==", v)
+        --end
+        --kong.log.info(sources)
 
-end
-
-
-function M.splitHeaderName(value)
-    local world = {}
-    local idx = 1
-    for i in string.gmatch(value, "([^.]+)") do
-        world[idx] = i
-        idx = idx + 1
-    end
-    return world
-end
-
-function M.changeHeaderName(world)
-    local m = table.concat(world, " ")
-    return "x_" .. string.gsub(m, " ", "_")
-end
-
-function M.injectAccessToken(accessToken, headerName, bearerToken)
-    ngx.log(ngx.DEBUG, "Injecting " .. headerName)
-    local token = accessToken
-    if (bearerToken) then
-        token = formatAsBearerToken(token)
-    end
-    ngx.req.set_header(headerName, token)
-end
-
-function M.injectIDToken(idToken, headerName)
-    ngx.log(ngx.DEBUG, "Injecting " .. headerName)
-    local tokenStr = cjson.encode(idToken)
-    ngx.req.set_header(headerName, ngx.encode_base64(tokenStr))
-end
-
-function M.setCredentials(user)
-    local tmp_user = user
-    tmp_user.id = user.sub
-    tmp_user.username = user.preferred_username
-    set_consumer(nil, tmp_user)
-end
-
-function M.injectUser(user, headerName)
-    ngx.log(ngx.DEBUG, "Injecting " .. headerName)
-    local userinfo = cjson.encode(user)
-    ngx.req.set_header(headerName, ngx.encode_base64(userinfo))
-end
-
-function M.injectGroups(user, claim)
-    if user[claim] ~= nil then
-        kong.ctx.shared.authenticated_groups = user[claim]
-    end
-end
-
-function M.injectHeaders(header_names, header_claims, sources)
-    --kong.log.info("injectHeaders")
-    --kong.log.info("header_names")
-    --for k, v in pairs(header_names) do
-    --    kong.log.info(k, "==", v)
-    --end
-    --kong.log.info(header_claims)
-    --for k, v in pairs(header_claims) do
-    --    kong.log.info(k, "==", v)
-    --end
-    --kong.log.info(sources)
-
-    if #header_names ~= #header_claims then
-        kong.log.err('Different number of elements provided in header_names and header_claims. Headers will not be added.')
-        return
-    end
-    for i = 1, #header_names do
-        local header, claim
-        header = header_names[i]
-        claim = header_claims[i]
-        kong.service.request.clear_header(header)
-        for j = 1, #sources do
-            local source
-            source = sources[j]
-            --for key, value in pairs(source) do
-            --    kong.log.info(key, "===", value)
-            --end
-            --kong.log.info("source   ",source)
-            if (source and source[claim]) then
-                kong.service.request.set_header(header, source[claim])
-                break
+        if #header_names ~= #header_claims then
+            kong.log.err('Different number of elements provided in header_names and header_claims. Headers will not be added.')
+            return
+        end
+        for i = 1, #header_names do
+            local header, claim
+            header = header_names[i]
+            claim = header_claims[i]
+            kong.service.request.clear_header(header)
+            for j = 1, #sources do
+                local source
+                source = sources[j]
+                --for key, value in pairs(source) do
+                --    kong.log.info(key, "===", value)
+                --end
+                --kong.log.info("source   ",source)
+                if (source and source[claim]) then
+                    kong.service.request.set_header(header, source[claim])
+                    break
+                end
             end
         end
     end
-end
 
-function M.has_bearer_access_token()
-    local header = ngx.req.get_headers()['Authorization']
-    if header and header:find(" ") then
-        local divider = header:find(' ')
-        if string.lower(header:sub(0, divider - 1)) == string.lower("Bearer") then
-            return true
-        end
-    end
-    return false
-end
-
--- verify if tables t1 and t2 have at least one common string item
--- instead of table, also string can be provided as t1 or t2
-function M.has_common_item(t1, t2)
-    if t1 == nil or t2 == nil then
-        return false
-    end
-    if type(t1) == "string" then
-        t1 = { t1 }
-    end
-    if type(t2) == "string" then
-        t2 = { t2 }
-    end
-    local i1, i2
-    for _, i1 in pairs(t1) do
-        for _, i2 in pairs(t2) do
-            if type(i1) == "string" and type(i2) == "string" and i1 == i2 then
+    function M.has_bearer_access_token()
+        local header = ngx.req.get_headers()['Authorization']
+        if header and header:find(" ") then
+            local divider = header:find(' ')
+            if string.lower(header:sub(0, divider - 1)) == string.lower("Bearer") then
                 return true
             end
         end
+        return false
     end
-    return false
-end
 
-return M
+    -- verify if tables t1 and t2 have at least one common string item
+    -- instead of table, also string can be provided as t1 or t2
+    function M.has_common_item(t1, t2)
+        if t1 == nil or t2 == nil then
+            return false
+        end
+        if type(t1) == "string" then
+            t1 = { t1 }
+        end
+        if type(t2) == "string" then
+            t2 = { t2 }
+        end
+        local i1, i2
+        for _, i1 in pairs(t1) do
+            for _, i2 in pairs(t2) do
+                if type(i1) == "string" and type(i2) == "string" and i1 == i2 then
+                    return true
+                end
+            end
+        end
+        return false
+    end
+
+    return M
