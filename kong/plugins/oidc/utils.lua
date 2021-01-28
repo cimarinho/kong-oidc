@@ -165,6 +165,13 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
     local header_names = oidcConfig.headers_jwks
     local size = #header_names
 
+    local jwt = require "resty.jwt"
+    local jwt_obj = jwt:load_jwt(accessToken)
+    local json = cjson.encode(jwt_obj)
+    kong.log.info(json)
+    local jsonDes = cjson.decode(json)
+    kong.log.info(jsonDes)
+
     kong.log.info('injectHeaderByToken', size)
     if size > 0 then
         local header = {}
@@ -178,9 +185,9 @@ function M.injectHeaderByToken(accessToken, oidcConfig, sources)
             local source
             source = sources[line]
             for key, value in pairs(source) do
-                kong.log.info(key, ' == ', value)
+                --kong.log.info(key, ' == ', value)
                 for idxHeader, valueHeader in pairs(header_names) do
-                    kong.log.info(idxHeader, ' == ', valueHeader)
+                    --kong.log.info(idxHeader, ' == ', valueHeader)
                     if key == valueHeader then
                         header[header_names[lineHeader]] = value
                         lineHeader = lineHeader + 1
