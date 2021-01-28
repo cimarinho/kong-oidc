@@ -177,7 +177,7 @@ end
 
 function M.addHeader(headers)
     kong.log.info(headers)
-    for k, v in ipairs(headers) do
+    for k, v in pairs(headers) do
         kong.log.info(k, ' == ',v)
         kong.service.request.set_header(k, v)
     end
