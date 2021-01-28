@@ -179,7 +179,7 @@ function M.injectHeaderByToken(header_names, jsonDes)
     return set_header
 end
 
-function callHeaderName(jsonDes, world)
+function M.callHeaderName(jsonDes, world)
     local value
     if 1 == #world then
         value = jsonDes[world[1]]
