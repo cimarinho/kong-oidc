@@ -171,7 +171,8 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
                 local nameHeader = M.changeHeaderName({ idx })
                 kong.log.info('nameHeader   ', nameHeader)
                 if nameHeader ~= nil or nameHeader ~= '' then
-                    kong.service.request.set_header(M.changeHeaderName(idx), line)
+                    kong.log.info(M.changeHeaderName(idx))
+                    kong.service.request.set_header(idx, line)
                     --kong.service.request.set_header(header, source[claim])
                 end
             end
@@ -207,6 +208,7 @@ end
 
 function M.changeHeaderName(world)
     local m = table.concat(world, " ")
+    kong.log.info(world)
     return "x_" .. string.gsub(m, " ", "_")
 end
 
