@@ -159,6 +159,7 @@ end
 function M.injectHeaderByToken(headers_jwks, jsonDes)
     local headers = {}
     local size = #headers_jwks
+    kong.log.info('jsonDesw ', #jsonDes)
     if #jsonDes > 0  and size > 0 then
         kong.log.info('jsonDes ', jsonDes)
         local header = {}
