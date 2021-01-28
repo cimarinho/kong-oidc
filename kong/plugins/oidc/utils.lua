@@ -158,7 +158,6 @@ function M.scopeRequired(oidcConfig, sources)
 end
 
 function M.injectHeaderByToken(headers_jwks, jsonDes)
-    local set_header = {}
     local size = #headers_jwks
     if size > 0 then
         for j = 1, #jsonDes do
@@ -178,9 +177,6 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
             end
         end
     end
-
-end
-
 end
 
 function M.callHeaderName(jsonDes, world)
