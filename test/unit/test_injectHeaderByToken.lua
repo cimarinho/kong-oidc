@@ -54,8 +54,6 @@ end
 
 TestMyStuff = {} --class
 function TestMyStuff:testWithNumbers()
-
-
     local response = {
         azp = "client-two",
         iat = 1611841776,

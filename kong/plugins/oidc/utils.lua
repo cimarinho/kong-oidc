@@ -137,7 +137,6 @@ local function set_consumer(consumer, credential)
 end
 
 function M.scopeRequired(oidcConfig, sources)
-    --kong.log.info("scopeRequired")
     local size = #oidcConfig.scopes_required
     if size > 0 then
         for j = 1, #sources do
@@ -145,7 +144,7 @@ function M.scopeRequired(oidcConfig, sources)
             source = sources[j]
             for key, value in pairs(source) do
                 if key == 'scope' then
-                    for ite, valueScope in pairs(oidcConfig.scopes_required) do
+                    for _, valueScope in pairs(oidcConfig.scopes_required) do
                         if not string.match(value, valueScope) then
                             return false
                         end
@@ -167,12 +166,9 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
                 header[headers_jwks[line]] = M.callHeaderName(jsonDes[j], world)
             end
             for idx, line in pairs(header) do
-                kong.log.info(idx, '  ==   ', line)
                 local nameHeader = M.changeHeaderName(idx )
-                kong.log.info('nameHeader   ', nameHeader)
                 if nameHeader ~= nil or nameHeader ~= '' then
                     kong.service.request.set_header(nameHeader, line)
-                    --kong.service.request.set_header(header, source[claim])
                 end
             end
         end
@@ -244,17 +240,6 @@ function M.injectGroups(user, claim)
 end
 
 function M.injectHeaders(header_names, header_claims, sources)
-    --kong.log.info("injectHeaders")
-    --kong.log.info("header_names")
-    --for k, v in pairs(header_names) do
-    --    kong.log.info(k, "==", v)
-    --end
-    --kong.log.info(header_claims)
-    --for k, v in pairs(header_claims) do
-    --    kong.log.info(k, "==", v)
-    --end
-    --kong.log.info(sources)
-
     if #header_names ~= #header_claims then
         kong.log.err('Different number of elements provided in header_names and header_claims. Headers will not be added.')
         return
@@ -267,10 +252,6 @@ function M.injectHeaders(header_names, header_claims, sources)
         for j = 1, #sources do
             local source
             source = sources[j]
-            --for key, value in pairs(source) do
-            --    kong.log.info(key, "===", value)
-            --end
-            --kong.log.info("source   ",source)
             if (source and source[claim]) then
                 kong.service.request.set_header(header, source[claim])
                 break
