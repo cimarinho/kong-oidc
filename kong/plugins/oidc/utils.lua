@@ -172,7 +172,8 @@ function M.injectHeaderByToken(header_names, jsonDes)
         for idx, line in pairs(header) do
             local nameHeader = M.changeHeaderName({ idx })
             if nameHeader ~= nil or nameHeader ~= '' then
-                kong.service.request.set_header(idx, line)
+                kong.log.info(idx, '  ==   ', line)
+                --kong.service.request.set_header(idx, line)
             end
         end
     end
