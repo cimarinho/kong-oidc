@@ -168,7 +168,7 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
         for idx, line in pairs(header) do
             local nameHeader = M.changeHeaderName(idx)
             if nameHeader ~= nil or nameHeader ~= '' then
-                headers[M.changeHeaderName(idx)] = line
+                headers[M.changeHeaderName(nameHeader)] = line
             end
         end
     end
