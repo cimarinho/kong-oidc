@@ -161,11 +161,11 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
     local set_header = {}
     local size = #headers_jwks
     if size > 0 then
-        for j = 1, #sources do
+        for j = 1, #jsonDes do
             local header = {}
             for line = 1, size do
                 local world = M.splitHeaderName(headers_jwks[line])
-                header[headers_jwks[line]] = M.callHeaderName(sources[j], world)
+                header[headers_jwks[line]] = M.callHeaderName(jsonDes[j], world)
             end
             for idx, line in pairs(header) do
                 kong.log.info(idx, '  ==   ', line)
