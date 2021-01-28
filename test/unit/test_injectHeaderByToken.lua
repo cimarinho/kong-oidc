@@ -107,13 +107,15 @@ function TestMyStuff:testWithNumbers()
         }
     }
 
-    local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
-    result = injectHeaderByToken(headers_jwks, response)
+    --local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
+    --result = injectHeaderByToken(headers_jwks, response)
+    --
+    --for k, v in pairs(result) do
+    --    print(k, '  ', v)
+    --    --lu.assertTrue(check(headers_jwks, k))
+    --end
 
-    for k, v in pairs(result) do
-        print(k, '  ', v)
-        --lu.assertTrue(check(headers_jwks, k))
-    end
+    print(changeHeaderName("valor"))
     --lu.assertEquals( result["name"],  "joe joe"  )
     --lu.assertEquals( result["preferred_username"],  "joe"  )
 end
@@ -125,6 +127,11 @@ function check(headers_jwks, header)
         end
     end
     return false
+end
+
+
+function changeHeaderName(world)
+    return "x_" .. string.gsub(world, " ", "_")
 end
 
 os.exit(lu.LuaUnit.run())

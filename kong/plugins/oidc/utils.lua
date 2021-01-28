@@ -207,9 +207,7 @@ function M.splitHeaderName(value)
 end
 
 function M.changeHeaderName(world)
-    local m = table.concat(world, " ")
-    kong.log.info(world)
-    return "x_" .. string.gsub(m, " ", "_")
+    return "x_" .. string.gsub(world, " ", "_")
 end
 
 function M.injectAccessToken(accessToken, headerName, bearerToken)
