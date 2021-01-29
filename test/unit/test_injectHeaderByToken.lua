@@ -52,20 +52,20 @@ local response = {
 }
 
 TestMyStuff = {} --class
-function TestMyStuff:testHeaderValid()
-    local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
-    local x_headers = { "x-name", "x-acesso.status", "x-permissao.squad.compras", "x-permissao.squad.mercado.valor", "x-permissao.squad.mercado.real.valor" } --"realm_access",
-    result = utils.injectHeaderByToken(headers_jwks, response)
-    for i, header in pairs(result) do
-        --lu.assertTrue(check(x_headers, header))
-        print(i, header)
-    end
-end
-
-function TestMyStuff:testHeaderEmpty()
-    result = utils.injectHeaderByToken({  }, response)
-    lu.assertEquals(0 , #result )
-end
+--function TestMyStuff:testHeaderValid()
+--    local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
+--    local x_headers = { "x-name", "x-acesso.status", "x-permissao.squad.compras", "x-permissao.squad.mercado.valor", "x-permissao.squad.mercado.real.valor" } --"realm_access",
+--    result = utils.injectHeaderByToken(headers_jwks, response)
+--    for i, header in pairs(result) do
+--        --lu.assertTrue(check(x_headers, header))
+--        print(i, header)
+--    end
+--end
+--
+--function TestMyStuff:testHeaderEmpty()
+--    result = utils.injectHeaderByToken({  }, response)
+--    lu.assertEquals(0 , #result )
+--end
 
 function TestMyStuff:testResponseEmpty()
     local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
@@ -76,16 +76,16 @@ function TestMyStuff:testResponseEmpty()
         lu.assertTrue(check(x_headers, header))
     end
 end
-
-function TestMyStuff:testResponseWithoutHeader()
-    local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
-    local resp = {
-        given_name = "joe",
-        sub = "6ccae6f4-a0ea-41e5-8ff0-ab839e5407f9"
-    }
-    result = utils.injectHeaderByToken(headers_jwks, resp)
-    lu.assertEquals(0 , #result )
-end
+--
+--function TestMyStuff:testResponseWithoutHeader()
+--    local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
+--    local resp = {
+--        given_name = "joe",
+--        sub = "6ccae6f4-a0ea-41e5-8ff0-ab839e5407f9"
+--    }
+--    result = utils.injectHeaderByToken(headers_jwks, resp)
+--    lu.assertEquals(0 , #result )
+--end
 
 function check(headers_jwks, header)
     for _, v in ipairs(headers_jwks) do
