@@ -56,8 +56,9 @@ function TestMyStuff:testHeaderValid()
     local headers_jwks = { "name", "acesso.status", "permissao.squad.compras", "permissao.squad.mercado.valor", "permissao.squad.mercado.real.valor", "permissao.squad.mercado.real.valor.naoexiste" } --"realm_access",
     local x_headers = { "x-name", "x-acesso.status", "x-permissao.squad.compras", "x-permissao.squad.mercado.valor", "x-permissao.squad.mercado.real.valor" } --"realm_access",
     result = utils.injectHeaderByToken(headers_jwks, response)
-    for _, header in pairs(x_headers) do
-        lu.assertTrue(check(x_headers, header))
+    for i, header in pairs(result) do
+        --lu.assertTrue(check(x_headers, header))
+        print(i, header)
     end
 end
 
