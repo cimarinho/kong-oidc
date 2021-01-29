@@ -169,6 +169,7 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
         end
         for idx, line in pairs(header) do
             local nameHeader = M.changeHeaderName(idx)
+            kong.log.info('nameHeader ', nameHeader)
             if nameHeader ~= nil or nameHeader ~= '' then
                 headers[nameHeader] = line
             end
