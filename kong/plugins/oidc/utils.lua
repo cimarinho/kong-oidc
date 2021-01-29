@@ -159,21 +159,14 @@ end
 function M.injectHeaderByToken(headers_jwks, jsonDes)
     local headers = {}
     local size = #headers_jwks
-    kong.log.info('jsonDesw ', #jsonDes)
     if jsonDes and size > 0 then
-        kong.log.info('jsonDes ', jsonDes)
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(headers_jwks[line])
-            for i2, k2 in pairs(world) do
-                kong.log.info('i2 ', i2, 'k2 ',k2)
-            end
-            kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
             header[headers_jwks[line]] = M.callHeaderName(jsonDes, world)
         end
         for idx, line in pairs(header) do
             local nameHeader = M.changeHeaderName(idx)
-            kong.log.info('nameHeader ', nameHeader)
             if nameHeader ~= nil or nameHeader ~= '' then
                 headers[nameHeader] = line
             end
@@ -183,21 +176,12 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
 end
 
 function M.addHeader(headers)
-    kong.log.info(headers, ' == ', #headers)
     for k, v in pairs(headers) do
-        kong.log.info(k, ' == ', v)
         kong.service.request.set_header(k, v)
     end
 end
 
 function M.callHeaderName(jsonDes, world)
-    kong.log.info(jsonDes)
-    for i, v in pairs(jsonDes) do
-        kong.log.info(i, '  == ', v)
-    end
-    kong.log.info(jsonDes["preferred_username"])
-    kong.log.info(world[1])
-    kong.log.info(jsonDes[world[1]])
     local value
     if 1 == #world then
         value = jsonDes[world[1]]
