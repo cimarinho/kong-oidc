@@ -159,19 +159,16 @@ end
 function M.injectHeaderByToken(headers_jwks, jsonDes)
     local headers = {}
     local size = #headers_jwks
-    for i, j in pairs(jsonDes) do
-        print(i, j)
-    end
-    kong.log.info('jsonDesw ', #jsonDes)
+    --kong.log.info('jsonDesw ', #jsonDes)
     if jsonDes and size > 0 then
         --kong.log.info('jsonDes ', jsonDes)
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(headers_jwks[line])
             for i2, k2 in pairs(world) do
-                kong.log.info('i2 ', i2, 'k2 ',k2)
+                --kong.log.info('i2 ', i2, 'k2 ',k2)
             end
-            kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
+            --kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
             header[headers_jwks[line]] = M.callHeaderName(jsonDes, world)
         end
         for idx, line in pairs(header) do
@@ -195,17 +192,16 @@ end
 
 function M.callHeaderName(jsonDes, world)
     local value
-    kong.log.info(jsonDes["preferred_username"])
     if 1 == #world then
         value = jsonDes[world[1]]
     elseif 2 == #world then
-        value = jsonDes[world[1]][world[2]]
+        if jsonDes[world[1]] ~= nil then
+            value = jsonDes[world[1]][world[2]]
+        end
     elseif 3 == #world then
-        value = jsonDes[world[1]][world[2]][world[3]]
-    elseif 4 == #world then
-        value = jsonDes[world[1]][world[2]][world[3]][world[4]]
-    elseif 5 == #world then
-        value = jsonDes[world[1]][world[2]][world[3]][world[4]][world[5]]
+        if jsonDes[world[1]] ~= nil and jsonDes[world[1]][world[2]] ~= nil then
+            value = jsonDes[world[1]][world[2]][world[3]]
+        end
     end
     return value
 end
