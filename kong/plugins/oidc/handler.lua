@@ -74,7 +74,6 @@ function handle(oidcConfig)
     end
 
     if response == nil then
-        --kong.log.info("response == nil")
         response = make_oidc(oidcConfig)
         if response then
             if response.user or response.id_token then
