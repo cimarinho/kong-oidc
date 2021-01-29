@@ -165,10 +165,10 @@ function M.injectHeaderByToken(headers_jwks, jsonDes)
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(headers_jwks[line])
-            for i2, k2 in pais(world) do
-                kong.log.info('i2 ', i2, 'k2 ',k2)
+            for i2, k2 in pairs(world) do
+                --kong.log.info('i2 ', i2, 'k2 ',k2)
             end
-            kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
+            --kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
             header[headers_jwks[line]] = M.callHeaderName(jsonDes, world)
         end
         for idx, line in pairs(header) do
