@@ -192,6 +192,9 @@ end
 
 function M.callHeaderName(jsonDes, world)
     kong.log.info(jsonDes)
+    for i, v in pairs(jsonDes) do
+        kong.log.info(i, '  == ', v)
+    end
     kong.log.info(jsonDes["preferred_username"])
     kong.log.info(world[1])
     kong.log.info(jsonDes[world[1]])
