@@ -37,7 +37,7 @@ function handle(oidcConfig)
     if oidcConfig.bearer_jwt_auth_enable then
         response, token = verify_bearer_jwt(oidcConfig)
         if response then
-            if not utils.scopeRequired(oidcConfig, { response }) then
+            if not utils.scopeRequired(oidcConfig.scopes_required, { response }) then
                 kong.log.info(' 403 nao autorizado ' )
                 utils.exit(403, '', 403)
             end
@@ -61,7 +61,8 @@ function handle(oidcConfig)
             response = introspect(oidcConfig)
         end
         if response then
-            utils.injectHeaderByToken( oidcConfig.headers_jwks,  response )
+            local addHeader = utils.injectHeaderByToken( oidcConfig.headers_jwks, { response } )
+            utils.addHeader(addHeader)
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
             utils.injectHeaders(oidcConfig.header_names, oidcConfig.header_claims, { response })

@@ -136,15 +136,15 @@ local function set_consumer(consumer, credential)
     end
 end
 
-function M.scopeRequired(oidcConfig, sources)
-    local size = #oidcConfig.scopes_required
+function M.scopeRequired(scopes_required, sources)
+    local size = #scopes_required
     if size > 0 then
         for j = 1, #sources do
             local source
             source = sources[j]
             for key, value in pairs(source) do
                 if key == 'scope' then
-                    for _, valueScope in pairs(oidcConfig.scopes_required) do
+                    for _, valueScope in pairs(scopes_required) do
                         if not string.match(value, valueScope) then
                             return false
                         end
@@ -159,21 +159,21 @@ end
 function M.injectHeaderByToken(headers_jwks, jsonDes)
     local headers = {}
     local size = #headers_jwks
-    --kong.log.info('jsonDesw ', #jsonDes)
+    kong.log.info('jsonDesw ', #jsonDes)
     if jsonDes and size > 0 then
-        --kong.log.info('jsonDes ', jsonDes)
+        kong.log.info('jsonDes ', jsonDes)
         local header = {}
         for line = 1, size do
             local world = M.splitHeaderName(headers_jwks[line])
             for i2, k2 in pairs(world) do
-                --kong.log.info('i2 ', i2, 'k2 ',k2)
+                kong.log.info('i2 ', i2, 'k2 ',k2)
             end
-            --kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
+            kong.log.info('line ', line, ' callHeaderName ', M.callHeaderName(jsonDes, world))
             header[headers_jwks[line]] = M.callHeaderName(jsonDes, world)
         end
         for idx, line in pairs(header) do
             local nameHeader = M.changeHeaderName(idx)
-            --kong.log.info('nameHeader ', nameHeader)
+            kong.log.info('nameHeader ', nameHeader)
             if nameHeader ~= nil or nameHeader ~= '' then
                 headers[nameHeader] = line
             end
