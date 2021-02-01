@@ -46,7 +46,6 @@ end
 
 function M.get_options(config, ngx)
     return {
-        base_payload_name = config.base_payload_name,
         scopes_required = config.scopes_required,
         headers_jwks = config.headers_jwks,
         bearer_jwks = config.bearer_jwks,
@@ -138,6 +137,7 @@ end
 
 function M.scopeRequired(scopes_required, sources)
     local size = #scopes_required
+    local valid = true
     if size > 0 then
         for j = 1, #sources do
             local source
@@ -146,14 +146,14 @@ function M.scopeRequired(scopes_required, sources)
                 if key == 'scope' then
                     for _, valueScope in pairs(scopes_required) do
                         if not string.match(value, valueScope) then
-                            return false
+                            valid = false
                         end
                     end
                 end
             end
         end
     end
-    return true
+    return valid
 end
 
 function M.injectHeaderByToken(headers_jwks, jsonDes)

@@ -53,10 +53,17 @@ local response = {
 
 TestMyStuff = {} --class
 function TestMyStuff:testScopeValid()
-    result = utils.scopeRequired({ "order:write" }, response)
+    result = utils.scopeRequired({ "order:write" }, {response})
     lu.assertTrue(result)
 end
-
+function TestMyStuff:testScopeValidTwoScope()
+    result = utils.scopeRequired({ "order:write", "email" }, {response})
+    lu.assertTrue(result)
+end
+function TestMyStuff:testScopeValid1()
+    result = utils.scopeRequired({ }, {response})
+    lu.assertTrue(result)
+end
 function TestMyStuff:testScopeInvalid()
     result = utils.scopeRequired({ "order:read" }, {response})
     lu.assertFalse(result)
