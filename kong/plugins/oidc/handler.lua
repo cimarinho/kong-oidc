@@ -36,6 +36,7 @@ function handle(oidcConfig)
     local response
     if oidcConfig.bearer_jwt_auth_enable then
         response, token = verify_bearer_jwt(oidcConfig)
+        kong.log.info('response ', response)
         if response then
             if not utils.scopeRequired(oidcConfig.scopes_required, { response }) then
                 kong.log.info(' 403 nao autorizado ' )
@@ -182,6 +183,7 @@ function verify_bearer_jwt(oidcConfig)
     local json, err, token = require("resty.openidc").bearer_jwt_verify(opts, claim_spec)
     if err then
         kong.log.err('Bearer JWT verify failed: ' .. err)
+        utils.exit(ngx.HTTP_UNAUTHORIZED, '', ngx.HTTP_UNAUTHORIZED)
         return nil
     end
     return json, token
