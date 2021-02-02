@@ -39,10 +39,10 @@ function handle(oidcConfig)
         kong.log.info('response ', response)
         if response then
             if not utils.scopeRequired(oidcConfig.scopes_required, { response }) then
-                kong.log.info(' 403 nao autorizado ' )
+                kong.log.info(' 403 nao autorizado ')
                 utils.exit(403, '', 403)
             end
-            local addHeader = utils.injectHeaderByToken( oidcConfig.headers_jwks,  response  )
+            local addHeader = utils.injectHeaderByToken(oidcConfig.headers_jwks, response)
             utils.addHeader(addHeader)
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
@@ -57,12 +57,12 @@ function handle(oidcConfig)
     if oidcConfig.introspection_endpoint == "yes" then
         local response
         if oidcConfig.bearer_jwks == "yes" then
-            response, token  = verify_bearer_jwt(oidcConfig)
+            response, token = verify_bearer_jwt(oidcConfig)
         else
             response = introspect(oidcConfig)
         end
         if response then
-            local addHeader = utils.injectHeaderByToken( oidcConfig.headers_jwks,  response  )
+            local addHeader = utils.injectHeaderByToken(oidcConfig.headers_jwks, response)
             utils.addHeader(addHeader)
             utils.setCredentials(response)
             utils.injectGroups(response, oidcConfig.groups_claim)
@@ -81,7 +81,7 @@ function handle(oidcConfig)
                 -- is there any scenario where lua-resty-openidc would not provide id_token?
                 utils.setCredentials(response.user or response.id_token)
             end
-            if response.user and response.user[oidcConfig.groups_claim]  ~= nil then
+            if response.user and response.user[oidcConfig.groups_claim] ~= nil then
                 utils.injectGroups(response.user, oidcConfig.groups_claim)
             elseif response.id_token then
                 utils.injectGroups(response.id_token, oidcConfig.groups_claim)
@@ -146,12 +146,14 @@ function introspect(oidcConfig)
 end
 
 function verify_bearer_jwt(oidcConfig)
-    kong.log.info(utils.has_bearer_access_token(), ' e == ', oidcConfig.bearer_only )
-    if not utils.has_bearer_access_token() and oidcConfig.bearer_only == "yes" then
-        utils.exit(ngx.HTTP_UNAUTHORIZED, '', ngx.HTTP_UNAUTHORIZED)
-    else
-        kong.log.info('nill')
-        return nil
+    kong.log.info(utils.has_bearer_access_token(), ' e == ', oidcConfig.bearer_only)
+    if not utils.has_bearer_access_token() then
+        if oidcConfig.bearer_only == "yes" then
+            utils.exit(ngx.HTTP_UNAUTHORIZED, '', ngx.HTTP_UNAUTHORIZED)
+        else
+            kong.log.info('nill')
+            return nil
+        end
     end
     -- setup controlled configuration for bearer_jwt_verify
     local opts = {
@@ -177,7 +179,9 @@ function verify_bearer_jwt(oidcConfig)
         -- mandatory for id token: iss, sub, aud, exp, iat
         iss = jwt_validators.equals(discovery_doc.issuer),
         sub = jwt_validators.required(),
-        aud = function(val) return utils.has_common_item(val, allowed_auds) end,
+        aud = function(val)
+            return utils.has_common_item(val, allowed_auds)
+        end,
         exp = jwt_validators.is_not_expired(),
         iat = jwt_validators.required(),
         -- optional validations
