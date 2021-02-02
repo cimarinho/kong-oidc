@@ -146,7 +146,7 @@ end
 
 function verify_bearer_jwt(oidcConfig)
     if not utils.has_bearer_access_token() then
-        return nil
+        utils.exit(401, '', 401)
     end
     -- setup controlled configuration for bearer_jwt_verify
     local opts = {
