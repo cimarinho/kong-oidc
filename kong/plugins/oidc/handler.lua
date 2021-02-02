@@ -146,8 +146,10 @@ function introspect(oidcConfig)
 end
 
 function verify_bearer_jwt(oidcConfig)
-    if not utils.has_bearer_access_token() then
+    if not utils.has_bearer_access_token() and oidcConfig.bearer_only == 'yes' then
         utils.exit(ngx.HTTP_UNAUTHORIZED, '', ngx.HTTP_UNAUTHORIZED)
+    else
+        return nil
     end
     -- setup controlled configuration for bearer_jwt_verify
     local opts = {
