@@ -147,7 +147,7 @@ end
 
 function verify_bearer_jwt(oidcConfig)
     kong.log.info(utils.has_bearer_access_token(), ' e == ', oidcConfig.bearer_only )
-    if not utils.has_bearer_access_token() and oidcConfig.bearer_only == 'yes' then
+    if not utils.has_bearer_access_token() and oidcConfig.bearer_only == "yes" then
         utils.exit(ngx.HTTP_UNAUTHORIZED, '', ngx.HTTP_UNAUTHORIZED)
     else
         kong.log.info('nill')
